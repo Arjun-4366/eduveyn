@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import edulogo from '@/assets/images/edulogo.png';
 
 // ── Logo exports ──────────────────────────────────────────────────────────
 
@@ -27,6 +29,17 @@ export const EduweynWordmark = ({ dark = true }: { dark?: boolean }) => (
       knowledge is growth
     </p>
   </div>
+);
+
+export const EduweynLogo = ({ height = 38 }: { height?: number }) => (
+  <Image
+    src={edulogo}
+    alt="Eduweyn"
+    height={height}
+    width={0}
+    style={{ height: `${height}px`, width: 'auto' }}
+    className="object-contain"
+  />
 );
 
 // ── Data ──────────────────────────────────────────────────────────────────
@@ -96,11 +109,8 @@ export default function Footer() {
 
           {/* Col 1 — Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-4 group w-fit">
-              <div className="group-hover:scale-105 transition-transform duration-300">
-                <EduweynMark size={38} />
-              </div>
-              <EduweynWordmark dark={false} />
+            <Link href="/" className="inline-block mb-4 group w-fit hover:opacity-90 transition-opacity duration-300">
+              <EduweynLogo height={38} />
             </Link>
 
             <p className="text-gray-400 text-xs leading-relaxed mb-5 max-w-[220px]">

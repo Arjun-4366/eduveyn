@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { EduweynMark, EduweynWordmark } from '@/components/layout/Footer';
+import { EduweynLogo } from '@/components/layout/Footer';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -35,11 +35,8 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="group-hover:scale-105 transition-transform duration-300">
-            <EduweynMark size={38} />
-          </div>
-          <EduweynWordmark dark={false} />
+        <Link href="/" className="shrink-0 group hover:opacity-90 transition-opacity duration-300">
+          <EduweynLogo height={38} />
         </Link>
 
         {/* Desktop nav */}
