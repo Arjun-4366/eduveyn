@@ -4,6 +4,9 @@ import PopularSubjects from './PopularSubjects';
 import TeacherHighlights from './TeacherHighlights';
 import HowItWorks from './HowItWorks';
 import Testimonials from './Testimonials';
+import WhyChooseEduweyn from './WhyChooseEduweyn';
+import StudyOptions from './StudyOptions';
+import FAQ from './FAQ';
 import AboutStats from '@/components/About/AboutStats';
 
 const Home = () => {
@@ -11,11 +14,14 @@ const Home = () => {
     <div>
       <HomeHero />
       <AboutStats />
+      <WhyChooseEduweyn />
       <PopularSubjects />
+      <StudyOptions />
       <HomeServices />
       <TeacherHighlights />
       <HowItWorks />
       <Testimonials />
+      <FAQ />
     </div>
   );
 };
