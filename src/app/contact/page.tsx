@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { fadeUp, stagger, springIn } from '@/lib/animations';
+import { createContactMessage } from '@/services/contact';
 
 // ── Decorators ─────────────────────────────────────────────────────────────
 
@@ -96,13 +97,40 @@ const contactMethods = [
   },
 ];
 
+type ContactErrors = { name?: string; email?: string; message?: string };
+
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validate = (): ContactErrors => {
+    const next: ContactErrors = {};
+    if (!form.name.trim()) next.name = 'Please enter your name';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = 'Please enter a valid email';
+    if (!form.message.trim()) next.message = 'Please enter a message';
+    return next;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    const nextErrors = validate();
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      await createContactMessage(form);
+      setSent(true);
+      setForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Failed to send message. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -229,41 +257,45 @@ export default function ContactPage() {
                     <div>
                       <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Your Name *</label>
                       <input
-                        required
                         type="text"
                         placeholder="Enter your name"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         className="w-full border border-gray-200 rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-sm outline-none focus:border-[#4915b0] focus:ring-2 focus:ring-violet-100 transition-all placeholder-gray-400"
                       />
+                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
                     <div>
                       <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Email Address *</label>
                       <input
-                        required
                         type="email"
                         placeholder="you@email.com"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         className="w-full border border-gray-200 rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-sm outline-none focus:border-[#4915b0] focus:ring-2 focus:ring-violet-100 transition-all placeholder-gray-400"
                       />
+                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
                     <div>
                       <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Message *</label>
                       <textarea
-                        required
                         rows={4}
                         placeholder="How can we help you? Tell us about your child's needs..."
                         value={form.message}
                         onChange={(e) => setForm({ ...form, message: e.target.value })}
                         className="w-full border border-gray-200 rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-sm outline-none focus:border-[#4915b0] focus:ring-2 focus:ring-violet-100 transition-all placeholder-gray-400 resize-none"
                       />
+                      {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                     </div>
+                    {submitError && (
+                      <p className="text-red-500 text-xs sm:text-sm bg-red-50 border border-red-100 rounded-xl px-3 py-2">{submitError}</p>
+                    )}
                     <button
                       type="submit"
-                      className="w-full bg-[#4915b0] text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-[#3a0f95] transition-colors text-sm shadow-lg shadow-violet-200"
+                      disabled={submitting}
+                      className="w-full bg-[#4915b0] text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-[#3a0f95] transition-colors text-sm shadow-lg shadow-violet-200 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Send Message →
+                      {submitting ? 'Sending…' : 'Send Message →'}
                     </button>
                   </form>
                 )}

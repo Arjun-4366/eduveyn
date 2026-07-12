@@ -15,6 +15,9 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Eduweyn — Knowledge is the Vein of Growth",
   description: "Expert online tutors for Maths, Science, English, Arabic, Coding, and Commerce. Book a free demo class today.",
+  icons: {
+    icon: "/icon-512.png",
+  },
 };
 
 export default function RootLayout({

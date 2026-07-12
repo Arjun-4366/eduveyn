@@ -8,8 +8,16 @@ import WhyChooseEduweyn from './WhyChooseEduweyn';
 import StudyOptions from './StudyOptions';
 import FAQ from './FAQ';
 import AboutStats from '@/components/About/AboutStats';
+import { getReviews } from '@/services/review';
+import { getTutors } from '@/services/tutor';
+import { getFaqs } from '@/services/faq';
+import { safeFetch } from '@/lib/utils';
 
-const Home = () => {
+const Home = async () => {
+  const reviews = await safeFetch(async () => (await getReviews({ limit: 20 })).data.reviews, []);
+  const tutors = await safeFetch(async () => (await getTutors({ limit: 3 })).data.tutors, []);
+  const faqs = await safeFetch(async () => (await getFaqs()).data, []);
+
   return (
     <div>
       <HomeHero />
@@ -18,10 +26,10 @@ const Home = () => {
       <PopularSubjects />
       <StudyOptions />
       <HomeServices />
-      <TeacherHighlights />
+      <TeacherHighlights tutors={tutors} />
       <HowItWorks />
-      <Testimonials />
-      <FAQ />
+      <Testimonials reviews={reviews} />
+      <FAQ faqs={faqs} />
     </div>
   );
 };

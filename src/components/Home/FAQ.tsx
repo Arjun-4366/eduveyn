@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUp, stagger } from '@/lib/animations';
+import { IFaq } from '@/types/faqs/faqs';
 
 // ── Decorative accents (same as HowItWorks / Testimonials) ────────────────
 
@@ -25,43 +26,14 @@ const StarOutline = ({ color = '#7C3AED', size = 22 }: { color?: string; size?: 
 
 // ── Data ────────────────────────────────────────────────────────────────
 
-const faqs = [
-  {
-    q: 'How do I book a free demo class?',
-    a: 'Click "Book Free Demo" anywhere on the site, pick a subject and a tutor, and choose a time that works for you. The first live session is completely free, with no card required.',
-    frameColor: '#4915b0',
-  },
-  {
-    q: 'What subjects do you offer tutoring for?',
-    a: 'Maths, Science, English, Arabic, Coding, and Commerce, across all grade levels. You can browse the full list and filter tutors by subject on the Subjects page.',
-    frameColor: '#D97706',
-  },
-  {
-    q: 'How are tutors verified?',
-    a: 'Every tutor goes through a background check, a subject-mastery assessment, and a live teaching demo before they\'re approved to join the platform.',
-    frameColor: '#DB2777',
-  },
-  {
-    q: 'Can I change or cancel my tutor?',
-    a: 'Yes. If a tutor isn\'t the right fit, you can switch at any time from your dashboard, free of charge — there\'s no lock-in contract.',
-    frameColor: '#059669',
-  },
-  {
-    q: 'What ages and grades do you support?',
-    a: 'We support students from early primary through to Grade 12 and exam-board preparation (IGCSE, IB, and more), with tutors matched to the right level.',
-    frameColor: '#7C3AED',
-  },
-  {
-    q: 'How does payment work?',
-    a: 'Pay per session or choose a monthly plan for regular classes. All payments are handled securely through the platform, and you only pay after the free demo.',
-    frameColor: '#0369A1',
-  },
-];
+const frameColors = ['#4915b0', '#D97706', '#DB2777', '#059669', '#7C3AED', '#0369A1'];
 
 // ── Section ─────────────────────────────────────────────────────────────
 
-export default function FAQ() {
+export default function FAQ({ faqs }: { faqs: IFaq[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  if (faqs.length === 0) return null;
 
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden relative">
@@ -120,19 +92,20 @@ export default function FAQ() {
         >
           {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
+            const frameColor = frameColors[i % frameColors.length];
             return (
               <motion.div
-                key={faq.q}
+                key={faq.id}
                 variants={fadeUp}
                 className="rounded-[24px] sm:rounded-[28px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-                style={{ backgroundColor: faq.frameColor }}
+                style={{ backgroundColor: frameColor }}
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   className="w-full flex items-center justify-between gap-4 text-left px-4 sm:px-6 py-4 sm:py-5"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-bold text-white text-sm sm:text-base">{faq.q}</span>
+                  <span className="font-bold text-white text-sm sm:text-base">{faq.question}</span>
                   <span
                     className={`shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center bg-white/20 transition-transform duration-300 ${
                       isOpen ? 'rotate-45' : ''
@@ -154,7 +127,7 @@ export default function FAQ() {
                       className="overflow-hidden"
                     >
                       <div className="bg-white mx-2 sm:mx-3 mb-2 sm:mb-3 rounded-[16px] sm:rounded-[20px] px-4 sm:px-5 py-3 sm:py-4">
-                        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
+                        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{faq.answer}</p>
                       </div>
                     </motion.div>
                   )}

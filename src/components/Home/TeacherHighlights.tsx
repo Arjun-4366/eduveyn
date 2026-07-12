@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { stagger, scaleIn, fadeUp } from '@/lib/animations';
+import { tutorFrameColors, tutorTag } from '@/lib/utils';
+import { ITutor } from '@/types/tutors/tutors';
 
 // ── Decorative accents (outside cards, same as HomeServices) ─────────────
 
@@ -30,48 +32,11 @@ const Wave = ({ color = '#22C55E' }: { color?: string }) => (
   </svg>
 );
 
-// ── Teacher data ──────────────────────────────────────────────────────────
+const tiltCycle = ['rotate-2', '-rotate-1', 'rotate-1'];
 
-const teachers = [
-  {
-    name: 'Aisha Rahman',
-    subject: 'Mathematics',
-    experience: '7 years',
-    languages: ['English', 'Arabic'],
-    rating: 4.9,
-    reviews: 143,
-    tag: 'Top Rated',
-    frameColor: '#7C3AED',
-    tiltClass: 'rotate-2',
-    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&h=300&q=80',
-  },
-  {
-    name: 'James Okafor',
-    subject: 'Science & Physics',
-    experience: '5 years',
-    languages: ['English'],
-    rating: 4.8,
-    reviews: 89,
-    tag: 'Most Booked',
-    frameColor: '#F59E0B',
-    tiltClass: '-rotate-1',
-    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=300&q=80',
-  },
-  {
-    name: 'Sara Khalil',
-    subject: 'English & Literature',
-    experience: '9 years',
-    languages: ['English', 'Arabic', 'French'],
-    rating: 5.0,
-    reviews: 211,
-    tag: 'Best in English',
-    frameColor: '#7C3AED',
-    tiltClass: 'rotate-1',
-    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=300&h=300&q=80',
-  },
-];
+export default function TeacherHighlights({ tutors }: { tutors: ITutor[] }) {
+  if (tutors.length === 0) return null;
 
-export default function TeacherHighlights() {
   return (
     <section className="py-16 sm:py-20 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -89,8 +54,8 @@ export default function TeacherHighlights() {
           >
             Our Teachers
           </motion.span>
-          <motion.h2 
-            variants={fadeUp} 
+          <motion.h2
+            variants={fadeUp}
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 px-2 sm:px-0"
           >
             Learn from the{' '}
@@ -101,8 +66,8 @@ export default function TeacherHighlights() {
               </svg>
             </span>
           </motion.h2>
-          <motion.p 
-            variants={fadeUp} 
+          <motion.p
+            variants={fadeUp}
             className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base mt-3 sm:mt-4 px-2 sm:px-0"
           >
             Handpicked, verified tutors with proven track records and genuine passion for teaching.
@@ -117,8 +82,8 @@ export default function TeacherHighlights() {
           viewport={{ once: true, margin: '-60px' }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
         >
-          {teachers.map((t, i) => (
-            <motion.div key={t.name} variants={scaleIn} className="relative">
+          {tutors.map((t, i) => (
+            <motion.div key={t.id} variants={scaleIn} className="relative">
 
               {/* ── Decorative icons outside the card ── */}
               {i === 0 && <>
@@ -145,26 +110,24 @@ export default function TeacherHighlights() {
 
               {/* ── Single unified card — colored frame shell ── */}
               <div
-                className={`rounded-[30px] sm:rounded-[35px] md:rounded-[40px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:rotate-0 group ${t.tiltClass}`}
-                style={{ backgroundColor: t.frameColor }}
+                className={`rounded-[30px] sm:rounded-[35px] md:rounded-[40px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:rotate-0 group ${tiltCycle[i % tiltCycle.length]}`}
+                style={{ backgroundColor: tutorFrameColors[i % tutorFrameColors.length] }}
               >
-                {/* Colored top — small photo centered here */}
+                {/* Colored top — tag + experience + photo */}
                 <div className="pt-4 sm:pt-5 md:pt-6 px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 text-center">
 
-                  {/* Tag + experience row */}
                   <div className="flex items-center justify-between mb-4 sm:mb-5">
                     <span className="text-[10px] sm:text-xs font-bold text-white bg-white/20 backdrop-blur-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full">
-                      {t.tag}
+                      {tutorTag(t.performance_score)}
                     </span>
                     <span className="text-[10px] sm:text-xs text-white/80 font-medium">{t.experience} exp.</span>
                   </div>
 
-                  {/* Small teacher photo — centered, with white ring frame */}
-                  <div className="flex justify-center mb-3 sm:mb-4">
+                  <div className="flex justify-center">
                     <div className="p-0.5 sm:p-1 rounded-[16px] sm:rounded-[18px] md:rounded-[20px] bg-white/30">
                       <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-[12px] sm:rounded-[14px] md:rounded-[16px] overflow-hidden">
                         <Image
-                          src={t.photo}
+                          src={t.profile_image}
                           alt={t.name}
                           width={80}
                           height={80}
@@ -173,34 +136,18 @@ export default function TeacherHighlights() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Stars */}
-                  <div className="flex items-center justify-center gap-0.5">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <svg key={s} width="12" height="12" viewBox="0 0 11 11" className="sm:w-[14px] sm:h-[14px]"
-                        fill={s <= Math.floor(t.rating) ? '#FCD34D' : 'rgba(255,255,255,0.35)'}>
-                        <path d="M5.5 1l1.1 3.4H10L7.3 6.5l1 3.2L5.5 7.9 2.7 9.7l1-3.2L1 4.4h3.4z" />
-                      </svg>
-                    ))}
-                    <span className="text-[10px] sm:text-xs text-white font-semibold ml-1">{t.rating}</span>
-                    <span className="text-[10px] sm:text-xs text-white/60 ml-1">· {t.reviews}</span>
-                  </div>
                 </div>
 
                 {/* ── White inner panel — content inside the frame ── */}
                 <div className="bg-white mx-2 sm:mx-3 mb-2 sm:mb-3 rounded-[20px] sm:rounded-[24px] md:rounded-[28px] px-4 sm:px-5 py-4 sm:py-5">
 
-                  {/* Name + subject */}
                   <h3 className="font-extrabold text-gray-900 text-base sm:text-lg text-center leading-tight">{t.name}</h3>
-                  <p className="text-xs sm:text-sm font-semibold text-center mt-0.5 mb-3 sm:mb-4" style={{ color: t.frameColor }}>
-                    {t.subject}
-                  </p>
 
-                  {/* Language pills */}
-                  <div className="flex flex-wrap gap-1.5 justify-center mb-3 sm:mb-4">
-                    {t.languages.map((lang) => (
-                      <span key={lang} className="text-[10px] sm:text-xs bg-gray-100 text-gray-600 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-medium">
-                        {lang}
+                  {/* Subject pills */}
+                  <div className="flex flex-wrap gap-1.5 justify-center mt-2 mb-3 sm:mb-4">
+                    {t.subjects.map((subject) => (
+                      <span key={subject.id} className="text-[10px] sm:text-xs bg-gray-100 text-gray-600 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-medium">
+                        {subject.name}
                       </span>
                     ))}
                   </div>
@@ -209,7 +156,7 @@ export default function TeacherHighlights() {
                   <Link
                     href="/demo"
                     className="block text-center text-white font-semibold py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm hover:opacity-90 transition-opacity duration-200"
-                    style={{ backgroundColor: t.frameColor }}
+                    style={{ backgroundColor: tutorFrameColors[i % tutorFrameColors.length] }}
                   >
                     Book Free Demo
                   </Link>
