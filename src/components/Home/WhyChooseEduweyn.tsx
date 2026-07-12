@@ -3,6 +3,11 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { fadeUp, stagger, scaleIn } from '@/lib/animations';
+import { ISiteContentWhyChooseUs } from '@/types/siteContent/siteContent';
+import { splitHeadlineEmphasis } from '@/lib/utils';
+import { getSubjectIcon } from '@/lib/subjectIcons';
+
+const DEFAULT_WHY_TITLE = 'Why Families Choose Us';
 
 // ── Decorative accents (same as HowItWorks / TeacherHighlights) ───────────
 
@@ -31,86 +36,26 @@ const Wave = ({ color = '#22C55E' }: { color?: string }) => (
 
 // ── Reason data ─────────────────────────────────────────────────────────
 
-const reasons = [
-  {
-    title: 'Verified Expert Tutors',
-    desc: 'Every tutor is background-checked and vetted for subject mastery before they ever meet a student.',
-    frameColor: '#4915b0',
-    tiltClass: 'rotate-1',
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 sm:w-7 sm:h-7" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 3l11 5v8c0 7-4.7 11.6-11 13-6.3-1.4-11-6-11-13V8z" />
-        <path d="M11 16l3.5 3.5L21 12" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Personalized Learning Plans',
-    desc: 'No generic curriculum — every plan is built around your child\'s pace, goals, and learning style.',
-    frameColor: '#D97706',
-    tiltClass: '-rotate-1',
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 sm:w-7 sm:h-7" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="16" cy="16" r="12" />
-        <circle cx="16" cy="16" r="6.5" />
-        <circle cx="16" cy="16" r="1.4" fill="white" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Flexible Scheduling',
-    desc: 'Morning, evening, or weekend — book sessions around your family\'s life, not the other way around.',
-    frameColor: '#DB2777',
-    tiltClass: 'rotate-2',
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 sm:w-7 sm:h-7" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="16" cy="17" r="11" />
-        <path d="M16 10v7l5 3" />
-        <path d="M11 3h10" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Real-Time Progress Tracking',
-    desc: 'Watch grades, attendance, and skill growth update live from an interactive parent dashboard.',
-    frameColor: '#059669',
-    tiltClass: '-rotate-2',
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 sm:w-7 sm:h-7" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 27V6M4 27h24" />
-        <path d="M8 22l5-7 4 4 7-10" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Free First Class',
-    desc: 'Try a full live session at no cost. See the teaching style and fit before you commit to anything.',
-    frameColor: '#7C3AED',
-    tiltClass: 'rotate-1',
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 sm:w-7 sm:h-7" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 4l3.5 7.5L27 13l-5.5 5.4L23 26l-7-4-7 4 1.5-7.6L5 13l7.5-1.5z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Safe & Secure Platform',
-    desc: 'Encrypted sessions, moderated chat, and full parental visibility — every class happens in a safe space.',
-    frameColor: '#0369A1',
-    tiltClass: '-rotate-1',
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 sm:w-7 sm:h-7" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 4l10 4v8c0 6.5-4.3 10.8-10 12-5.7-1.2-10-5.5-10-12V8z" />
-        <rect x="12" y="15" width="8" height="6" rx="1.5" />
-        <path d="M13.5 15v-2.5a2.5 2.5 0 015 0V15" />
-      </svg>
-    ),
-  },
+const frameColors = ['#4915b0', '#D97706', '#DB2777', '#059669', '#7C3AED', '#0369A1'];
+const tiltClasses = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-2', 'rotate-1', '-rotate-1'];
+
+const DEFAULT_REASONS = [
+  { icon: 'shield', title: 'Verified Expert Tutors', subtitle: 'Every tutor is background-checked and vetted for subject mastery before they ever meet a student.' },
+  { icon: 'target', title: 'Personalized Learning Plans', subtitle: 'No generic curriculum — every plan is built around your child\'s pace, goals, and learning style.' },
+  { icon: 'calendar', title: 'Flexible Scheduling', subtitle: 'Morning, evening, or weekend — book sessions around your family\'s life, not the other way around.' },
+  { icon: 'trending_up', title: 'Real-Time Progress Tracking', subtitle: 'Watch grades, attendance, and skill growth update live from an interactive parent dashboard.' },
+  { icon: 'gift', title: 'Free First Class', subtitle: 'Try a full live session at no cost. See the teaching style and fit before you commit to anything.' },
+  { icon: 'lock', title: 'Safe & Secure Platform', subtitle: 'Encrypted sessions, moderated chat, and full parental visibility — every class happens in a safe space.' },
 ];
 
 // ── Section ─────────────────────────────────────────────────────────────
 
-export default function WhyChooseEduweyn() {
+export default function WhyChooseEduweyn({ header }: { header: ISiteContentWhyChooseUs }) {
+  const subtitle = header.subtitle || "Six reasons parents trust Eduweyn with their child's learning journey.";
+  const title = header.title || DEFAULT_WHY_TITLE;
+  const { lead: titleLead, emphasis: titleEmphasis } = splitHeadlineEmphasis(title);
+  const reasons = header.items && header.items.length > 0 ? header.items : DEFAULT_REASONS;
+
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -133,19 +78,33 @@ export default function WhyChooseEduweyn() {
             variants={fadeUp}
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 px-2 sm:px-0"
           >
-            Why Families{' '}
-            <span className="relative inline-block text-[#4915b0]">
-              Choose Us
-              <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 130 8" preserveAspectRatio="none">
-                <path d="M0,4 C32,0 98,8 130,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-              </svg>
-            </span>
+            {title === DEFAULT_WHY_TITLE ? (
+              <>
+                Why Families{' '}
+                <span className="relative inline-block text-[#4915b0]">
+                  Choose Us
+                  <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 130 8" preserveAspectRatio="none">
+                    <path d="M0,4 C32,0 98,8 130,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            ) : (
+              <>
+                {titleLead}
+                <span className="relative inline-block text-[#4915b0]">
+                  {titleEmphasis}
+                  <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 130 8" preserveAspectRatio="none">
+                    <path d="M0,4 C32,0 98,8 130,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            )}
           </motion.h2>
           <motion.p
             variants={fadeUp}
             className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base mt-3 sm:mt-4 px-2 sm:px-0"
           >
-            Six reasons parents trust Eduweyn with their child&apos;s learning journey.
+            {subtitle}
           </motion.p>
         </motion.div>
 
@@ -157,7 +116,9 @@ export default function WhyChooseEduweyn() {
           viewport={{ once: true, margin: '-60px' }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
-          {reasons.map((reason, i) => (
+          {reasons.map((reason, i) => {
+            const Icon = getSubjectIcon(reason.icon);
+            return (
             <motion.div key={reason.title} variants={scaleIn} className="relative">
 
               {/* Decorative icons outside cards */}
@@ -184,22 +145,23 @@ export default function WhyChooseEduweyn() {
 
               {/* Colored frame + white inner panel */}
               <div
-                className={`rounded-[28px] sm:rounded-[32px] md:rounded-[36px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:rotate-0 group ${reason.tiltClass}`}
-                style={{ backgroundColor: reason.frameColor }}
+                className={`rounded-[28px] sm:rounded-[32px] md:rounded-[36px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:rotate-0 group ${tiltClasses[i % tiltClasses.length]}`}
+                style={{ backgroundColor: frameColors[i % frameColors.length] }}
               >
                 <div className="pt-4 sm:pt-5 md:pt-6 px-4 sm:px-5 pb-4 sm:pb-5">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 group-hover:scale-110 transition-transform duration-300">
-                    {reason.icon}
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white group-hover:scale-110 transition-transform duration-300">
+                    <Icon size={20} />
                   </div>
                 </div>
 
                 <div className="bg-white mx-2 sm:mx-3 mb-2 sm:mb-3 rounded-[18px] sm:rounded-[20px] md:rounded-[24px] px-4 sm:px-5 py-4 sm:py-5">
                   <h3 className="font-bold text-gray-900 text-sm sm:text-base mb-1.5 sm:mb-2 leading-snug">{reason.title}</h3>
-                  <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{reason.desc}</p>
+                  <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{reason.subtitle}</p>
                 </div>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
 
         {/* Bottom CTA */}

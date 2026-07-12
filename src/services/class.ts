@@ -3,7 +3,7 @@ import { IClassListResponse } from '@/types/classes/classes';
 
 export async function getClasses(): Promise<IClassListResponse> {
   const res = await fetch(ENDPOINTS.GET_CLASSES, {
-    next: { revalidate: 3600 },
+    cache: 'no-store',
   });
 
   if (!res.ok) {

@@ -3,7 +3,7 @@ import { IFaqListResponse } from '@/types/faqs/faqs';
 
 export async function getFaqs(): Promise<IFaqListResponse> {
   const res = await fetch(ENDPOINTS.GET_FAQS, {
-    next: { revalidate: 3600 },
+    cache: 'no-store',
   });
 
   if (!res.ok) {

@@ -12,7 +12,7 @@ export async function getReviews(params?: IReviewListParams): Promise<IReviewLis
     : '';
 
   const res = await fetch(`${ENDPOINTS.GET_REVIEWS}${query}`, {
-    next: { revalidate: 3600 },
+    cache: 'no-store',
   });
 
   if (!res.ok) {

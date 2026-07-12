@@ -3,6 +3,10 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { fadeUp, stagger } from '@/lib/animations';
+import { ISiteContentAbout } from '@/types/siteContent/siteContent';
+import { splitHeadlineEmphasis } from '@/lib/utils';
+
+const DEFAULT_ABOUT_TITLE = 'Every Child Deserves a Great Teacher';
 
 const Asterisk = ({ color = '#F59E0B', size = 30 }: { color?: string; size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
@@ -36,7 +40,11 @@ const Float = ({ children, delay = 0 }: { children: React.ReactNode; delay?: num
   </motion.div>
 );
 
-export default function AboutHero() {
+export default function AboutHero({ about }: { about: ISiteContentAbout }) {
+  const title = about.aboutTitle || DEFAULT_ABOUT_TITLE;
+  const subtitle = about.aboutSubtitle || "Eduweyn was built by educators and parents who were frustrated with one-size-fits-all tutoring. We set out to create something different — a platform where every student gets the individual attention they deserve.";
+  const { lead, emphasis } = splitHeadlineEmphasis(title);
+
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden relative">
       
@@ -75,20 +83,34 @@ export default function AboutHero() {
             variants={fadeUp}
             className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 sm:mb-6 leading-tight px-2 sm:px-0"
           >
-            Every Child Deserves
-            <span className="relative inline-block text-[#4915b0]">
-              a Great Teacher
-              <svg className="absolute left-0 w-full -bottom-1 sm:-bottom-2" height="8" viewBox="0 0 300 8" preserveAspectRatio="none">
-                <path d="M0,4 C75,0 150,8 225,4 C262,2 282,3 300,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-              </svg>
-            </span>
+            {title === DEFAULT_ABOUT_TITLE ? (
+              <>
+                Every Child Deserves{' '}
+                <span className="relative inline-block text-[#4915b0]">
+                  a Great Teacher
+                  <svg className="absolute left-0 w-full -bottom-1 sm:-bottom-2" height="8" viewBox="0 0 300 8" preserveAspectRatio="none">
+                    <path d="M0,4 C75,0 150,8 225,4 C262,2 282,3 300,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            ) : (
+              <>
+                {lead}
+                <span className="relative inline-block text-[#4915b0]">
+                  {emphasis}
+                  <svg className="absolute left-0 w-full -bottom-1 sm:-bottom-2" height="8" viewBox="0 0 300 8" preserveAspectRatio="none">
+                    <path d="M0,4 C75,0 150,8 225,4 C262,2 282,3 300,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            )}
           </motion.h1>
-          
-          <motion.p 
-            variants={fadeUp} 
+
+          <motion.p
+            variants={fadeUp}
             className="text-gray-500 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 px-2 sm:px-0"
           >
-            Eduweyn was built by educators and parents who were frustrated with one-size-fits-all tutoring. We set out to create something different — a platform where every student gets the individual attention they deserve.
+            {subtitle}
           </motion.p>
           
           <motion.div 

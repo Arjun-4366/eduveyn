@@ -12,7 +12,7 @@ export async function getTutors(params?: ITutorListParams): Promise<ITutorListRe
     : '';
 
   const res = await fetch(`${ENDPOINTS.GET_TUTORS}${query}`, {
-    next: { revalidate: 300 },
+    cache: 'no-store',
   });
 
   if (!res.ok) {

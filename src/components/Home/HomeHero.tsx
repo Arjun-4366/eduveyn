@@ -6,6 +6,10 @@ import { motion } from 'framer-motion';
 import heroLeft from '@/assets/images/heroleft.png';
 import heroRight from '@/assets/images/heroright.png';
 import { fadeUp, stagger, slideLeft, slideRight } from '@/lib/animations';
+import { ISiteContentHeader } from '@/types/siteContent/siteContent';
+import { splitHeadlineEmphasis } from '@/lib/utils';
+
+const DEFAULT_HERO_TITLE = 'Personalized Online Tuition for Every Student.';
 
 const PurpleCrown = () => (
   <svg width="52" height="48" viewBox="0 0 52 48" fill="none">
@@ -27,7 +31,11 @@ const OrangeAsterisk = () => (
   </svg>
 );
 
-export default function HomeHero() {
+export default function HomeHero({ header }: { header: ISiteContentHeader }) {
+  const title = header.title || DEFAULT_HERO_TITLE;
+  const subtitle = header.subtitle || "Expert tutors. Flexible schedules. Real results. Helping every child unlock their full potential — one lesson at a time.";
+  const { lead, emphasis } = splitHeadlineEmphasis(title);
+
   return (
     <section className="relative overflow-hidden bg-[#F5F5F7] hero-grid-bg">
       <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[580px]">
@@ -64,20 +72,34 @@ export default function HomeHero() {
             variants={fadeUp}
             className="font-extrabold text-gray-900 mt-4 sm:mt-5 leading-tight text-3xl sm:text-4xl md:text-5xl max-w-2xl px-2 sm:px-0"
           >
-            Personalized Online Tuition{' '}
-            <span className="relative inline-block">
-              for Every Student.
-              <svg className="absolute left-0 w-full -bottom-2.5" height="10" viewBox="0 0 300 10" preserveAspectRatio="none">
-                <path d="M0,5 C60,0 120,10 180,5 C220,2 260,4 300,5" stroke="#F59E0B" strokeWidth="4" fill="none" strokeLinecap="round" />
-              </svg>
-            </span>
+            {title === DEFAULT_HERO_TITLE ? (
+              <>
+                Personalized Online Tuition{' '}
+                <span className="relative inline-block">
+                  for Every Student.
+                  <svg className="absolute left-0 w-full -bottom-2.5" height="10" viewBox="0 0 300 10" preserveAspectRatio="none">
+                    <path d="M0,5 C60,0 120,10 180,5 C220,2 260,4 300,5" stroke="#F59E0B" strokeWidth="4" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            ) : (
+              <>
+                {lead}
+                <span className="relative inline-block">
+                  {emphasis}
+                  <svg className="absolute left-0 w-full -bottom-2.5" height="10" viewBox="0 0 300 10" preserveAspectRatio="none">
+                    <path d="M0,5 C60,0 120,10 180,5 C220,2 260,4 300,5" stroke="#F59E0B" strokeWidth="4" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            )}
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             className="text-gray-500 text-sm sm:text-base leading-relaxed mt-6 sm:mt-8 max-w-md px-2 sm:px-0"
           >
-            Expert tutors. Flexible schedules. Real results. Helping every child unlock their full potential — one lesson at a time.
+            {subtitle}
           </motion.p>
 
           {/* Three CTA buttons */}

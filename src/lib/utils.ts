@@ -9,6 +9,18 @@ export async function safeFetch<T>(fetcher: () => Promise<T>, fallback: T): Prom
   }
 }
 
+// Splits a dynamic (backend-sourced) headline into a plain lead and an emphasized
+// last word/phrase, so section titles keep the site's signature "one emphasized
+// word + amber squiggle underline" look even when the text isn't a hardcoded
+// default with a hand-picked emphasis point. A single-word title emphasizes the
+// whole thing.
+export function splitHeadlineEmphasis(text: string): { lead: string; emphasis: string } {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= 1) return { lead: '', emphasis: text.trim() };
+  const emphasis = words.pop() as string;
+  return { lead: words.join(' ') + ' ', emphasis };
+}
+
 // Cycling brand palette for per-card frame colors on tutor grids (Home highlights + Find Teachers).
 export const tutorFrameColors = ['#7C3AED', '#D97706', '#DB2777', '#059669', '#0369A1', '#EA580C'];
 

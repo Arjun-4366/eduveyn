@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import edulogo from '@/assets/images/edulogo.png';
+import { ISiteContentContact } from '@/types/siteContent/siteContent';
 
 // ── Logo exports ──────────────────────────────────────────────────────────
 
@@ -44,9 +45,11 @@ export const EduweynLogo = ({ height = 38 }: { height?: number }) => (
 
 // ── Data ──────────────────────────────────────────────────────────────────
 
-const social = [
+const buildSocialLinks = (contact: ISiteContentContact) => [
   {
-    label: 'WhatsApp', href: '#', color: '#22C55E',
+    label: 'WhatsApp',
+    href: contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, '')}` : '#',
+    color: '#22C55E',
     icon: (
       <svg width="15" height="15" viewBox="0 0 28 28" fill="white">
         <path d="M14 0C6.27 0 0 6.27 0 14c0 2.47.64 4.79 1.76 6.81L.07 27.6l6.87-1.67A13.94 13.94 0 0014 28c7.73 0 14-6.27 14-14S21.73 0 14 0zm7.07 19.64c-.3.85-1.75 1.62-2.39 1.66-.62.04-.64.47-4.01-.94-3.38-1.41-5.45-4.81-5.61-5.03-.16-.22-1.24-1.66-1.21-3.12.03-1.47.8-2.17 1.08-2.47.27-.29.59-.35.78-.35l.56.01c.19 0 .45-.07.7.54l.91 2.25c.25.62.11.81-.06 1.11l-.45.73c-.16.27-.33.56-.14.86.19.3.86 1.41 1.86 2.28 1.26 1.1 2.36 1.48 2.68 1.64.32.16.52.13.71-.08l.7-.83c.22-.28.43-.2.71-.1l2.2 1.02c.62.29 1 .46 1.13.72.13.25.13 1.45-.17 2.3z" />
@@ -54,7 +57,7 @@ const social = [
     ),
   },
   {
-    label: 'Instagram', href: '#', color: '#E1306C',
+    label: 'Instagram', href: contact.social.instagram || '#', color: '#E1306C',
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5" />
@@ -64,7 +67,7 @@ const social = [
     ),
   },
   {
-    label: 'Facebook', href: '#', color: '#1877F2',
+    label: 'Facebook', href: contact.social.facebook || '#', color: '#1877F2',
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -72,10 +75,26 @@ const social = [
     ),
   },
   {
-    label: 'X', href: '#', color: '#111827',
+    label: 'LinkedIn', href: contact.social.linkedin || '#', color: '#0A66C2',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+        <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0zM7.27 20.1H3.65V9h3.62v11.1zM5.47 7.43c-1.16 0-2.1-.94-2.1-2.1 0-1.16.94-2.1 2.1-2.1 1.16 0 2.1.94 2.1 2.1 0 1.16-.93 2.1-2.1 2.1zM20.34 20.1h-3.62v-5.4c0-1.29-.02-2.94-1.79-2.94-1.8 0-2.08 1.4-2.08 2.85v5.49H9.23V9h3.47v1.52h.05c.48-.91 1.67-1.87 3.44-1.87 3.68 0 4.36 2.42 4.36 5.57v5.88z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'X', href: contact.social.x || '#', color: '#111827',
     icon: (
       <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'YouTube', href: contact.social.youtube || '#', color: '#FF0000',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+        <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.51 3.5 12 3.5 12 3.5s-7.51 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14C4.49 20.5 12 20.5 12 20.5s7.51 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.57V8.43L15.82 12l-6.07 3.57z" />
       </svg>
     ),
   },
@@ -99,7 +118,12 @@ const parentLinks = [
 
 // ── Footer ────────────────────────────────────────────────────────────────
 
-export default function Footer() {
+export default function Footer({ contact }: { contact: ISiteContentContact }) {
+  const social = buildSocialLinks(contact);
+  const phone = contact.phone || '+971 50 123 4567';
+  const email = contact.email || 'hello@eduweyn.com';
+  const address = contact.address || 'Dubai, UAE';
+
   return (
     <footer className="bg-[#F0F2F5] border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-8">
@@ -176,9 +200,9 @@ export default function Footer() {
             <h3 className="text-[#4915b0] font-bold text-sm mb-4">Get in Touch</h3>
             <ul className="flex flex-col gap-3 mb-6">
               {[
-                { icon: '📞', value: '+971 50 123 4567', href: 'tel:+971501234567' },
-                { icon: '✉️', value: 'hello@eduweyn.com', href: 'mailto:hello@eduweyn.com' },
-                { icon: '📍', value: 'Dubai, UAE', href: '#' },
+                { icon: '📞', value: phone, href: `tel:${phone.replace(/\s/g, '')}` },
+                { icon: '✉️', value: email, href: `mailto:${email}` },
+                { icon: '📍', value: address, href: '#' },
               ].map((item) => (
                 <li key={item.value}>
                   <a href={item.href}

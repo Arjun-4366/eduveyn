@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUp, stagger } from '@/lib/animations';
 import { IFaq } from '@/types/faqs/faqs';
+import { ISiteContentFaq } from '@/types/siteContent/siteContent';
+import { splitHeadlineEmphasis } from '@/lib/utils';
 
 // ── Decorative accents (same as HowItWorks / Testimonials) ────────────────
 
@@ -30,10 +32,14 @@ const frameColors = ['#4915b0', '#D97706', '#DB2777', '#059669', '#7C3AED', '#03
 
 // ── Section ─────────────────────────────────────────────────────────────
 
-export default function FAQ({ faqs }: { faqs: IFaq[] }) {
+export default function FAQ({ faqs, header }: { faqs: IFaq[]; header: ISiteContentFaq }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   if (faqs.length === 0) return null;
+
+  const subtitle = header.faqSubtitle || "Everything parents ask us before their child's first lesson.";
+  const title = header.faqTitle || 'Frequently Asked Questions';
+  const { lead: titleLead, emphasis: titleEmphasis } = splitHeadlineEmphasis(title);
 
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden relative">
@@ -66,9 +72,9 @@ export default function FAQ({ faqs }: { faqs: IFaq[] }) {
             variants={fadeUp}
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 px-2 sm:px-0"
           >
-            Frequently Asked{' '}
+            {titleLead}
             <span className="relative inline-block">
-              Questions
+              {titleEmphasis}
               <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 140 8" preserveAspectRatio="none">
                 <path d="M0,4 C35,0 105,8 140,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
               </svg>
@@ -78,7 +84,7 @@ export default function FAQ({ faqs }: { faqs: IFaq[] }) {
             variants={fadeUp}
             className="text-gray-500 max-w-md mx-auto text-sm sm:text-base mt-3 sm:mt-4 px-2 sm:px-0"
           >
-            Everything parents ask us before their child&apos;s first lesson.
+            {subtitle}
           </motion.p>
         </motion.div>
 

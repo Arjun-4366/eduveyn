@@ -12,7 +12,7 @@ export async function getSubjects(params?: ISubjectListParams): Promise<ISubject
     : '';
 
   const res = await fetch(`${ENDPOINTS.GET_SUBJECTS}${query}`, {
-    next: { revalidate: 3600 },
+    cache: 'no-store',
   });
 
   if (!res.ok) {

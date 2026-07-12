@@ -28,6 +28,9 @@ const ENDPOINTS = {
 
   // demo bookings
   CREATE_DEMO_BOOKING: `${API_BASE_URL}/demo-bookings`,
+
+  // site content
+  GET_SITE_CONTENT: `${API_BASE_URL}/site-content`,
 };
 
 export { ENDPOINTS };

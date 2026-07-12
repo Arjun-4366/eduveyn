@@ -5,6 +5,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import LenisProvider from "@/providers/LenisProvider";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
+import { getSiteContent, EMPTY_SITE_CONTENT } from "@/services/siteContent";
+import { safeFetch } from "@/lib/utils";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -20,11 +22,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteContent = await safeFetch(async () => (await getSiteContent()).data, EMPTY_SITE_CONTENT);
+
   return (
     <html lang="en" className={`${plusJakarta.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
@@ -33,7 +37,7 @@ export default function RootLayout({
           <div className="flex-1">
             {children}
           </div>
-          <Footer />
+          <Footer contact={siteContent.contact} />
           <FloatingWhatsApp />
         </LenisProvider>
       </body>
