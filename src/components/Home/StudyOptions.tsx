@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { fadeUp, stagger, scaleIn } from '@/lib/animations';
 import { ISiteContentPricing } from '@/types/siteContent/siteContent';
 import { getSubjectIcon } from '@/lib/subjectIcons';
+import { splitHeadlineEmphasis } from '@/lib/utils';
+
+const DEFAULT_PRICING_TITLE = 'A Learning Style for Every Child';
 
 // ── Decorative accents (same as HowItWorks / TeacherHighlights) ───────────
 
@@ -32,8 +35,9 @@ const tiltClasses = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-2'];
 export default function StudyOptions({ pricing }: { pricing: ISiteContentPricing }) {
   const options = pricing.plans ?? [];
   const label = pricing.label || 'Study Options';
-  const title = pricing.title || 'A Learning Style for Every Child';
+  const title = pricing.title || DEFAULT_PRICING_TITLE;
   const subtitle = pricing.subtitle || 'Whether your child thrives one-on-one, in a group, or at their own pace — pick the format that fits.';
+  const { lead: titleLead, emphasis: titleEmphasis } = splitHeadlineEmphasis(title);
 
   if (options.length === 0) return null;
 
@@ -59,7 +63,27 @@ export default function StudyOptions({ pricing }: { pricing: ISiteContentPricing
             variants={fadeUp}
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 px-2 sm:px-0"
           >
-            {title}
+            {title === DEFAULT_PRICING_TITLE ? (
+              <>
+                A Learning Style for{' '}
+                <span className="relative inline-block">
+                  Every Child
+                  <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 150 8" preserveAspectRatio="none">
+                    <path d="M0,4 C38,0 112,8 150,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            ) : (
+              <>
+                {titleLead}
+                <span className="relative inline-block">
+                  {titleEmphasis}
+                  <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 150 8" preserveAspectRatio="none">
+                    <path d="M0,4 C38,0 112,8 150,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </>
+            )}
           </motion.h2>
           <motion.p
             variants={fadeUp}
