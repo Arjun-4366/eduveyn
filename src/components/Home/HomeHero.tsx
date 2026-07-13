@@ -27,7 +27,7 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
 
   return (
     <section className="relative overflow-hidden bg-[#F5F5F7] hero-grid-bg">
-      <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[580px]">
+      <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[580px] px-4 sm:px-6 lg:px-10 xl:px-16">
 
         {/* Left student image - Hidden on mobile/tablet, visible on desktop */}
         <motion.div
@@ -55,7 +55,7 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
         >
           <motion.h1
             variants={fadeUp}
-            className="font-extrabold text-gray-900 leading-tight text-3xl sm:text-4xl md:text-5xl max-w-2xl px-2 sm:px-0"
+            className="font-extrabold text-gray-900 leading-tight text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl 2xl:text-5xl  max-w-2xl px-2 sm:px-0"
           >
             {title === DEFAULT_HERO_TITLE ? (
               <>
@@ -94,7 +94,7 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
           >
             <Link
               href="/demo"
-              className="flex items-center gap-2.5 bg-[#4915b0] text-white font-semibold px-5 sm:px-7 py-3 sm:py-3.5 rounded-full hover:bg-[#3a0f95] transition-colors shadow-lg shadow-violet-200 text-xs sm:text-sm w-full sm:w-auto justify-center"
+              className="flex items-center gap-2.5 bg-[#4915b0] text-white font-semibold px-5 sm:px-7 h-12 sm:h-14 rounded-full hover:bg-[#3a0f95] transition-colors shadow-lg shadow-violet-200 text-xs sm:text-sm w-full sm:w-auto justify-center"
             >
               <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 bg-white/20 rounded-full">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -106,7 +106,7 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
 
             <Link
               href="/teachers"
-              className="flex items-center gap-2 border border-gray-300 text-gray-700 font-semibold px-5 sm:px-7 py-3 sm:py-3.5 rounded-full hover:border-[#4915b0] hover:text-[#4915b0] transition-colors text-xs sm:text-sm bg-white w-full sm:w-auto justify-center"
+              className="flex items-center gap-2 border border-gray-300 text-gray-700 font-semibold px-5 sm:px-7 h-12 sm:h-14 rounded-full hover:border-[#4915b0] hover:text-[#4915b0] transition-colors text-xs sm:text-sm bg-white w-full sm:w-auto justify-center"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <circle cx="6.5" cy="6.5" r="3.5" stroke="currentColor" strokeWidth="1.8" />
@@ -117,37 +117,13 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
 
             <Link
               href="/login"
-              className="flex items-center gap-2 bg-[#F59E0B] text-gray-900 font-semibold px-5 sm:px-7 py-3 sm:py-3.5 rounded-full hover:bg-amber-400 transition-colors text-xs sm:text-sm w-full sm:w-auto justify-center"
+              className="flex items-center gap-2 bg-[#F59E0B] text-gray-900 font-semibold px-5 sm:px-7 h-12 sm:h-14 rounded-full hover:bg-amber-400 transition-colors text-xs sm:text-sm w-full sm:w-auto justify-center"
             >
               Join Now
             </Link>
           </motion.div>
 
-          {/* Trust strip */}
-          <motion.div 
-            variants={fadeUp} 
-            className="flex flex-row items-center gap-3 sm:gap-6 mt-8 sm:mt-10 flex-wrap justify-center"
-          >
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="#10B981">
-                <path d="M7 1l1.45 2.9 3.2.47-2.32 2.26.55 3.19L7 8.3 4.12 9.82l.55-3.19L2.35 4.37l3.2-.47z" />
-              </svg>
-              4.9/5 Rating
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#4915b0" strokeWidth="1.5">
-                <circle cx="7" cy="7" r="6" />
-                <path d="M7 4v3.5l2 2" strokeLinecap="round" />
-              </svg>
-              First class free
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#F59E0B" strokeWidth="1.5">
-                <path d="M7 1l1.35 2.74L11.5 4.18l-2.25 2.19.53 3.09L7 7.95 4.22 9.46l.53-3.09L2.5 4.18l3.15-.44z" />
-              </svg>
-              500+ Students
-            </div>
-          </motion.div>
+       
         </motion.div>
 
         {/* Right student image - Hidden on mobile/tablet, visible on desktop */}

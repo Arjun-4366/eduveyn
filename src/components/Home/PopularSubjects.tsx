@@ -62,16 +62,13 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
             const Icon = getSubjectIcon(subject.icon);
             return (
               <motion.div key={subject.id} variants={scaleIn}>
-                <Link
-                  href={`/teachers?subject=${subject.id}`}
-                  className="group block bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                >
+                <div className="block bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm">
                   {/* Vivid colored frame */}
                   <div
-                    className="h-24 sm:h-28 md:h-32 flex items-center justify-center transition-all duration-300"
+                    className="h-24 sm:h-28 md:h-32 flex items-center justify-center"
                     style={{ backgroundColor: color }}
                   >
-                    <div className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white transition-transform duration-300 group-hover:scale-110">
+                    <div className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white">
                       <Icon size={28} />
                     </div>
                   </div>
@@ -84,7 +81,7 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
                       <p className="text-[10px] sm:text-xs text-gray-400">{subject.tutor_count} teachers</p>
                     </div>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             );
           })}

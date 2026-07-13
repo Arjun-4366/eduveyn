@@ -37,7 +37,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="shrink-0 flex items-center gap-1 group hover:opacity-90 transition-opacity duration-300">
           <EduweynLogo height={30} />
-          <span className="text-xl sm:text-3xl font-semibold italic tracking-tight text-[#002860]">
+          <span className="text-xl sm:text-2xl font-semibold italic tracking-tight text-[#002860]">
             Edu<span className="text-[#00A0A8]">veyn</span>
           </span>
         </Link>

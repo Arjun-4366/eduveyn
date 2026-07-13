@@ -1,7 +1,9 @@
 'use client';
 
+import { useState, useEffect, useRef, useTransition } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { stagger, springIn, fadeUp } from '@/lib/animations';
 import { ISubject } from '@/types/subjects/subjects';
 import { getSubjectIcon } from '@/lib/subjectIcons';
@@ -40,12 +42,65 @@ const Float = ({ children, delay = 0 }: { children: React.ReactNode; delay?: num
   </motion.div>
 );
 
+// ── Skeleton card ──────────────────────────────────────────────────────────
+
+const skeletonTilts = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-2', 'rotate-1', '-rotate-2'];
+
+const SkeletonCard = ({ index }: { index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3, delay: index * 0.06 }}
+    className={`rounded-[28px] sm:rounded-[32px] md:rounded-[36px] overflow-hidden animate-pulse ${skeletonTilts[index % 6]}`}
+    style={{ backgroundColor: '#E5E7EB' }}
+  >
+    <div className="pt-6 sm:pt-7 md:pt-8 px-5 sm:px-6 pb-4 sm:pb-5 md:pb-6 flex justify-center">
+      <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-gray-300" />
+    </div>
+    <div className="bg-white mx-2.5 sm:mx-3 mb-2.5 sm:mb-3 rounded-[18px] sm:rounded-[20px] md:rounded-[24px] px-4 sm:px-6 py-4 sm:py-5">
+      <div className="h-5 bg-gray-200 rounded-full w-2/3 mx-auto mb-2.5" />
+      <div className="h-3 bg-gray-100 rounded-full w-1/2 mx-auto mb-3" />
+      <div className="h-3 bg-gray-100 rounded-full w-full mb-1.5" />
+      <div className="h-3 bg-gray-100 rounded-full w-4/5" />
+    </div>
+  </motion.div>
+);
+
 const frameColors = ['#4915b0', '#D97706', '#DB2777', '#0369A1', '#059669', '#EA580C'];
 const tiltClasses = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-2', 'rotate-1', '-rotate-1'];
 
 // ── Page ──────────────────────────────────────────────────────────────────
 
-export default function SubjectsPageContent({ subjects }: { subjects: ISubject[] }) {
+export default function SubjectsPageContent({
+  subjects,
+  initialSearch,
+}: {
+  subjects: ISubject[];
+  initialSearch: string;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+  const [search, setSearch] = useState(initialSearch);
+  const isFirstRender = useRef(true);
+
+  const goToSearch = (searchValue: string) => {
+    const params = new URLSearchParams();
+    if (searchValue) params.set('search', searchValue);
+    startTransition(() => router.push(`${pathname}?${params.toString()}`));
+  };
+
+  // Debounce: push the new search URL 450ms after the user stops typing.
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const timer = setTimeout(() => goToSearch(search), 450);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+
   return (
     <main className="min-h-screen">
 
@@ -83,10 +138,68 @@ export default function SubjectsPageContent({ subjects }: { subjects: ISubject[]
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base mt-3 sm:mt-4 px-2 sm:px-0"
+              className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base mb-6 sm:mb-8 px-2 sm:px-0"
             >
               Choose a subject and connect with expert tutors who specialize in it.
             </motion.p>
+
+            {/* Search bar */}
+            <motion.div variants={fadeUp}
+              className="flex items-center gap-2.5 sm:gap-3 bg-white rounded-xl sm:rounded-2xl px-4 sm:px-5 py-3 sm:py-3.5 max-w-lg mx-auto shadow-xl border border-gray-100 transition-shadow focus-within:shadow-2xl focus-within:border-violet-200"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {isPending ? (
+                  <motion.svg
+                    key="spinner"
+                    initial={{ opacity: 0, rotate: 0 }}
+                    animate={{ opacity: 1, rotate: 360 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ rotate: { repeat: Infinity, duration: 0.7, ease: 'linear' }, opacity: { duration: 0.15 } }}
+                    className="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 text-[#4915b0]"
+                    viewBox="0 0 24 24" fill="none"
+                  >
+                    <circle className="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                    <path className="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </motion.svg>
+                ) : (
+                  <motion.svg
+                    key="searchicon"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    width="16" height="16" viewBox="0 0 18 18" fill="none"
+                    className="text-gray-400 shrink-0 sm:w-[18px] sm:h-[18px]"
+                  >
+                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.8" />
+                    <path d="M14 14l3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </motion.svg>
+                )}
+              </AnimatePresence>
+
+              <input
+                type="text"
+                placeholder="Search subjects..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="flex-1 outline-none text-sm text-gray-700 placeholder-gray-400 bg-transparent"
+              />
+
+              <AnimatePresence>
+                {search && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.6 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.6 }}
+                    transition={{ duration: 0.15 }}
+                    onClick={() => setSearch('')}
+                    className="w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors shrink-0 text-xs"
+                  >
+                    ✕
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -94,64 +207,132 @@ export default function SubjectsPageContent({ subjects }: { subjects: ISubject[]
       {/* ── Subject cards ── */}
       <section className="py-12 sm:py-16 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          {subjects.length === 0 ? (
-            <p className="text-center text-gray-500 text-sm">No subjects available yet — check back soon.</p>
-          ) : (
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-            >
-              {subjects.map((subject, i) => {
-                const color = frameColors[i % frameColors.length];
-                const tiltClass = tiltClasses[i % tiltClasses.length];
-                const Icon = getSubjectIcon(subject.icon);
-                return (
-                  <motion.div key={subject.id} variants={springIn} className="relative">
 
-                    {/* Scattered decorative icons */}
-                    {i === 0 && <div className="absolute -top-5 sm:-top-6 -right-2 sm:-right-3 z-10"><Asterisk color="#F59E0B" size={20} /></div>}
-                    {i === 2 && <div className="absolute -top-5 sm:-top-6 left-1/2 -translate-x-1/2 z-10"><StarOutline color="#7C3AED" size={16} /></div>}
-                    {i === 4 && <div className="absolute -top-4 sm:-top-5 -left-2 sm:-left-3 z-10 hidden sm:block"><Wave color="#22C55E" /></div>}
+          {/* Results count */}
+          <div className="text-xs sm:text-sm text-gray-500 mb-6 sm:mb-8 h-5 flex items-center">
+            <AnimatePresence mode="wait">
+              {isPending ? (
+                <motion.span
+                  key="counting"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="text-gray-400 italic"
+                >
+                  Searching…
+                </motion.span>
+              ) : (
+                <motion.span
+                  key={`count-${subjects.length}`}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Showing <span className="font-semibold text-gray-900">{subjects.length}</span> subject{subjects.length !== 1 ? 's' : ''}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
 
-                    <Link
-                      href={`/teachers?subject=${subject.id}`}
-                      className={`block rounded-[28px] sm:rounded-[32px] md:rounded-[36px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:rotate-0 group ${tiltClass}`}
-                      style={{ backgroundColor: color }}
-                    >
-                      {/* Colored top — icon centered */}
-                      <div className="pt-6 sm:pt-7 md:pt-8 px-5 sm:px-6 pb-4 sm:pb-5 md:pb-6 text-center">
-                        <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center mx-auto text-white group-hover:scale-110 transition-transform duration-300">
-                          <Icon size={36} />
+          <AnimatePresence mode="wait">
+            {isPending ? (
+              <motion.div
+                key="skeleton"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+              >
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <SkeletonCard key={i} index={i} />
+                ))}
+              </motion.div>
+            ) : subjects.length > 0 ? (
+              <motion.div
+                key="results"
+                variants={stagger}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+              >
+                {subjects.map((subject, i) => {
+                  const color = frameColors[i % frameColors.length];
+                  const tiltClass = tiltClasses[i % tiltClasses.length];
+                  const Icon = getSubjectIcon(subject.icon);
+                  return (
+                    <motion.div key={subject.id} variants={springIn} className="relative">
+
+                      {/* Scattered decorative icons */}
+                      {i === 0 && <div className="absolute -top-5 sm:-top-6 -right-2 sm:-right-3 z-10"><Asterisk color="#F59E0B" size={20} /></div>}
+                      {i === 2 && <div className="absolute -top-5 sm:-top-6 left-1/2 -translate-x-1/2 z-10"><StarOutline color="#7C3AED" size={16} /></div>}
+                      {i === 4 && <div className="absolute -top-4 sm:-top-5 -left-2 sm:-left-3 z-10 hidden sm:block"><Wave color="#22C55E" /></div>}
+
+                      <Link
+                        href={`/teachers?subject=${subject.id}`}
+                        className={`block rounded-[28px] sm:rounded-[32px] md:rounded-[36px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:rotate-0 group ${tiltClass}`}
+                        style={{ backgroundColor: color }}
+                      >
+                        {/* Colored top — icon centered */}
+                        <div className="pt-6 sm:pt-7 md:pt-8 px-5 sm:px-6 pb-4 sm:pb-5 md:pb-6 text-center">
+                          <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center mx-auto text-white group-hover:scale-110 transition-transform duration-300">
+                            <Icon size={36} />
+                          </div>
                         </div>
-                      </div>
 
-                      {/* White inner panel */}
-                      <div className="bg-white mx-2.5 sm:mx-3 mb-2.5 sm:mb-3 rounded-[18px] sm:rounded-[20px] md:rounded-[24px] px-4 sm:px-6 py-4 sm:py-5">
-                        <h2 className="font-extrabold text-gray-900 text-base sm:text-lg mb-0.5">{subject.name}</h2>
-                        <p className="text-[10px] sm:text-xs font-semibold mb-2.5 sm:mb-3" style={{ color }}>
-                          {subject.tutor_count} teachers available
-                        </p>
-                        {subject.description && (
-                          <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">{subject.description}</p>
-                        )}
-                        <span
-                          className="inline-flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm font-bold transition-colors duration-200"
-                          style={{ color }}
-                        >
-                          View Teachers
-                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="sm:w-[14px] sm:h-[14px]">
-                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          )}
+                        {/* White inner panel */}
+                        <div className="bg-white mx-2.5 sm:mx-3 mb-2.5 sm:mb-3 rounded-[18px] sm:rounded-[20px] md:rounded-[24px] px-4 sm:px-6 py-4 sm:py-5">
+                          <h2 className="font-extrabold text-gray-900 text-base sm:text-lg mb-0.5">{subject.name}</h2>
+                          <p className="text-[10px] sm:text-xs font-semibold mb-2.5 sm:mb-3" style={{ color }}>
+                            {subject.tutor_count} teachers available
+                          </p>
+                          {subject.description && (
+                            <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">{subject.description}</p>
+                          )}
+                          <span
+                            className="inline-flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm font-bold transition-colors duration-200"
+                            style={{ color }}
+                          >
+                            View Teachers
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="sm:w-[14px] sm:h-[14px]">
+                              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </span>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ type: 'spring', stiffness: 240, damping: 22 }}
+                className="text-center py-16 sm:py-20 md:py-24"
+              >
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[20px] sm:rounded-[28px] flex items-center justify-center mx-auto mb-4 sm:mb-5" style={{ backgroundColor: '#EDE9F9' }}>
+                  <svg width="28" height="28" viewBox="0 0 48 48" fill="none" stroke="#4915b0" strokeWidth="2" className="sm:w-[36px] sm:h-[36px]">
+                    <circle cx="22" cy="22" r="14" />
+                    <path d="M35 35l8 8" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <p className="font-bold text-gray-900 text-base sm:text-lg">No subjects found</p>
+                <p className="text-xs sm:text-sm text-gray-400 mt-1">Try a different search</p>
+                {search && (
+                  <button
+                    onClick={() => setSearch('')}
+                    className="mt-4 sm:mt-5 text-sm text-[#4915b0] font-semibold hover:underline"
+                  >
+                    Clear search
+                  </button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* ── CTA block ── */}
           <motion.div
