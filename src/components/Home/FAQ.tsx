@@ -35,7 +35,7 @@ const frameColors = ['#4915b0', '#4915b0'];
 export default function FAQ({ faqs, header }: { faqs: IFaq[]; header: ISiteContentFaq }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  if (faqs.length === 0) return null;
+  if (faqs?.length === 0) return null;
 
   const subtitle = header.faqSubtitle || "Everything parents ask us before their child's first lesson.";
   const title = header.faqTitle || 'Frequently Asked Questions';
@@ -96,7 +96,7 @@ export default function FAQ({ faqs, header }: { faqs: IFaq[]; header: ISiteConte
           viewport={{ once: true, margin: '-60px' }}
           className="flex flex-col gap-3 sm:gap-4"
         >
-          {faqs.map((faq, i) => {
+          {faqs?.map((faq, i) => {
             const isOpen = openIndex === i;
             const frameColor = frameColors[i % frameColors.length];
             return (

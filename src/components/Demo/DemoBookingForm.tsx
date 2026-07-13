@@ -258,7 +258,7 @@ export default function DemoBookingForm({ classes, subjects }: { classes: IClass
                           className="w-full border border-gray-200 rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-sm outline-none focus:border-[#4915b0] focus:ring-2 focus:ring-violet-100 transition-all text-gray-700 bg-white"
                         >
                           <option value="">Select grade</option>
-                          {classes.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                          {classes?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                         </select>
                         {errors.class_id && <p className="text-red-500 text-xs mt-1">{errors.class_id}</p>}
                       </motion.div>

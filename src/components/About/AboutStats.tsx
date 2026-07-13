@@ -14,7 +14,7 @@ const DEFAULT_STATS: ISiteContentStat[] = [
 ];
 
 export default function AboutStats({ stats }: { stats: ISiteContentStat[] }) {
-  const items = stats.length > 0 ? stats : DEFAULT_STATS;
+  const items = stats?.length > 0 ? stats : DEFAULT_STATS;
 
   return (
     <section className="py-16 px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden">

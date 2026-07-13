@@ -51,7 +51,7 @@ const DEFAULT_STEPS: ISiteContentSteps = {
 // ── Section ───────────────────────────────────────────────────────────────
 
 export default function HowItWorks({ steps: stepsContent }: { steps: ISiteContentSteps }) {
-  const content = stepsContent.steps.length > 0 ? stepsContent : DEFAULT_STEPS;
+  const content = stepsContent.steps?.length > 0 ? stepsContent : DEFAULT_STEPS;
   const steps = content.steps;
   const { lead: titleLead, emphasis: titleEmphasis } = splitHeadlineEmphasis(content.title);
 

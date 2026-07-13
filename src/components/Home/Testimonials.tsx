@@ -215,7 +215,7 @@ export default function Testimonials({ reviews: initialReviews }: { reviews: IRe
   const [page, setPage] = useState(0);
   const [showForm, setShowForm] = useState(false);
 
-  const totalPages = Math.max(1, Math.ceil(reviews.length / PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(reviews?.length / PER_PAGE));
 
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
   const next = () => setPage((p) => (p + 1) % totalPages);
@@ -225,7 +225,7 @@ export default function Testimonials({ reviews: initialReviews }: { reviews: IRe
     setPage(0); // jump to page 1 so the new review is immediately visible
   };
 
-  const visible = reviews.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
+  const visible = reviews?.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
 
   return (
     <section id="testimonials" className="py-16 sm:py-20 px-4 sm:px-6 bg-[#F0F2F5] hero-grid-bg overflow-hidden relative">
@@ -302,7 +302,7 @@ export default function Testimonials({ reviews: initialReviews }: { reviews: IRe
             >
               <ReviewFormCard onClose={() => setShowForm(false)} onSubmitted={handleSubmitted} />
             </motion.div>
-          ) : reviews.length === 0 ? (
+          ) : reviews?.length === 0 ? (
             <motion.div
               key="empty"
               initial={{ opacity: 0, y: 24 }}
@@ -331,7 +331,7 @@ export default function Testimonials({ reviews: initialReviews }: { reviews: IRe
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
                   >
-                    {visible.map((review, i) => (
+                    {visible?.map((review, i) => (
                       <motion.div
                         key={review.id}
                         variants={springIn}

@@ -11,17 +11,6 @@ import { splitHeadlineEmphasis } from '@/lib/utils';
 
 const DEFAULT_HERO_TITLE = 'Personalized Online Tuition for Every Student.';
 
-const PurpleCrown = () => (
-  <svg width="52" height="48" viewBox="0 0 52 48" fill="none">
-    <path d="M10 40 L10 26 L17 34 L24 14 L31 34 L38 26 L38 40 Q24 45 10 40 Z" fill="#4915b0" />
-    <line x1="24" y1="8" x2="24" y2="3" stroke="#4915b0" strokeWidth="2.5" strokeLinecap="round" />
-    <line x1="37" y1="12" x2="41" y2="8" stroke="#4915b0" strokeWidth="2" strokeLinecap="round" />
-    <line x1="11" y1="12" x2="7" y2="8" stroke="#4915b0" strokeWidth="2" strokeLinecap="round" />
-    <line x1="4" y1="26" x2="0" y2="26" stroke="#4915b0" strokeWidth="2" strokeLinecap="round" />
-    <line x1="44" y1="26" x2="48" y2="26" stroke="#4915b0" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
 const OrangeAsterisk = () => (
   <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
     <line x1="19" y1="3" x2="19" y2="35" stroke="#F59E0B" strokeWidth="3.5" strokeLinecap="round" />
@@ -64,13 +53,9 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
           animate="visible"
           className="flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-5 py-8 sm:py-12 z-10"
         >
-          <motion.div variants={fadeUp}>
-            <PurpleCrown />
-          </motion.div>
-
           <motion.h1
             variants={fadeUp}
-            className="font-extrabold text-gray-900 mt-4 sm:mt-5 leading-tight text-3xl sm:text-4xl md:text-5xl max-w-2xl px-2 sm:px-0"
+            className="font-extrabold text-gray-900 leading-tight text-3xl sm:text-4xl md:text-5xl max-w-2xl px-2 sm:px-0"
           >
             {title === DEFAULT_HERO_TITLE ? (
               <>
