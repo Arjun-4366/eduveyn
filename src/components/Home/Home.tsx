@@ -4,7 +4,7 @@ import PopularSubjects from './PopularSubjects';
 import TeacherHighlights from './TeacherHighlights';
 import HowItWorks from './HowItWorks';
 import Testimonials from './Testimonials';
-import WhyChooseEduweyn from './WhyChooseEduweyn';
+import WhyChooseEduveyn from './WhyChooseEduveyn';
 import StudyOptions from './StudyOptions';
 import FAQ from './FAQ';
 import AboutStats from '@/components/About/AboutStats';
@@ -26,7 +26,7 @@ const Home = async () => {
     <div>
       <HomeHero header={siteContent.header} />
       <AboutStats stats={siteContent.stats} />
-      <WhyChooseEduweyn header={siteContent.why_choose_us} />
+      <WhyChooseEduveyn header={siteContent.why_choose_us} />
       <PopularSubjects subjects={subjects} />
       <StudyOptions pricing={siteContent.pricing} />
       <HomeServices />

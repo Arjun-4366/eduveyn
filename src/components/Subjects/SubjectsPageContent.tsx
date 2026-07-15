@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { stagger, springIn, fadeUp } from '@/lib/animations';
 import { ISubject } from '@/types/subjects/subjects';
-import { getSubjectIcon } from '@/lib/subjectIcons';
+import IconGlyph from '@/components/ui/IconGlyph';
 
 // ── Decorators ─────────────────────────────────────────────────────────────
 
@@ -243,7 +243,7 @@ export default function SubjectsPageContent({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+                className="grid grid-cols-[repeat(auto-fit,minmax(280px,400px))] justify-center gap-6 sm:gap-8"
               >
                 {Array.from({ length: 6 }).map((_, i) => (
                   <SkeletonCard key={i} index={i} />
@@ -255,12 +255,11 @@ export default function SubjectsPageContent({
                 variants={stagger}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+                className="grid grid-cols-[repeat(auto-fit,minmax(280px,400px))] justify-center gap-6 sm:gap-8"
               >
                 {subjects.map((subject, i) => {
                   const color = frameColors[i % frameColors.length];
                   const tiltClass = tiltClasses[i % tiltClasses.length];
-                  const Icon = getSubjectIcon(subject.icon);
                   return (
                     <motion.div key={subject.id} variants={springIn} className="relative">
 
@@ -277,7 +276,7 @@ export default function SubjectsPageContent({
                         {/* Colored top — icon centered */}
                         <div className="pt-6 sm:pt-7 md:pt-8 px-5 sm:px-6 pb-4 sm:pb-5 md:pb-6 text-center">
                           <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center mx-auto text-white group-hover:scale-110 transition-transform duration-300">
-                            <Icon size={36} />
+                            <IconGlyph value={subject.icon} size={36} />
                           </div>
                         </div>
 

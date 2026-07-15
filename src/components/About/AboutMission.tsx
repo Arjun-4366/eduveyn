@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { slideLeft, slideRight } from '@/lib/animations';
 import { ISiteContentMission } from '@/types/siteContent/siteContent';
-import { getSubjectIcon } from '@/lib/subjectIcons';
+import IconGlyph from '@/components/ui/IconGlyph';
 import { splitHeadlineEmphasis } from '@/lib/utils';
 
 const frameColors = ['#4915b0', '#059669', '#0369A1', '#D97706'];
@@ -78,7 +78,6 @@ export default function AboutMission({ mission }: { mission: ISiteContentMission
           className="grid grid-cols-1 xs:grid-cols-2 gap-4 sm:gap-5 md:gap-6"
         >
           {content.items.map((v, i) => {
-            const Icon = getSubjectIcon(v.icon);
             return (
               <div
                 key={v.title}
@@ -87,7 +86,7 @@ export default function AboutMission({ mission }: { mission: ISiteContentMission
               >
                 <div className="pt-4 sm:pt-5 px-4 sm:px-5 pb-3 sm:pb-4 flex justify-center">
                   <div className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center text-white">
-                    <Icon size={26} />
+                    <IconGlyph value={v.icon} size={26} />
                   </div>
                 </div>
                 <div className="bg-white mx-2 sm:mx-2.5 mb-2 sm:mb-2.5 rounded-[16px] sm:rounded-[18px] md:rounded-[20px] px-3 sm:px-4 py-3 sm:py-4">

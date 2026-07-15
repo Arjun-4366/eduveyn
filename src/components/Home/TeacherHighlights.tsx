@@ -80,7 +80,7 @@ export default function TeacherHighlights({ tutors }: { tutors: ITutor[] }) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
+          className="grid grid-cols-[repeat(auto-fit,minmax(300px,400px))] justify-center gap-8 sm:gap-10"
         >
           {tutors.map((t, i) => (
             <motion.div key={t.id} variants={scaleIn} className="relative">

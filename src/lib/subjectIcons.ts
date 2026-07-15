@@ -109,3 +109,14 @@ export const SUBJECT_ICON_MAP: Record<string, IconType> = {
 export function getSubjectIcon(key: string): IconType {
   return SUBJECT_ICON_MAP[key] ?? FaBook;
 }
+
+/**
+ * New icon values (picked via eduveyn-admin's Iconify-backed picker) are
+ * Iconify ids (`"mdi:calculator"` - library:name, always containing a
+ * colon). Old rows still hold a bare legacy key (`"math"`) from the
+ * SUBJECT_ICON_MAP above - this tells the two apart so a single renderer
+ * (`IconGlyph`) can handle both without a data migration.
+ */
+export function isIconifyId(value: string): boolean {
+  return value.includes(":");
+}

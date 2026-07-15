@@ -7,7 +7,7 @@ import { ISiteContentContact } from '@/types/siteContent/siteContent';
 
 // ── Logo exports ──────────────────────────────────────────────────────────
 
-export const EduweynMark = ({ size = 44 }: { size?: number }) => (
+export const EduveynMark = ({ size = 44 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
     <path d="M22 41 C9 38 3 30 3 22 C3 11 11 3 22 3 C33 3 41 11 41 22 C41 30 35 38 22 41Z" fill="#7C3AED" />
     <path d="M22 7 C29 7 36 13 36 21 C36 27 32 33 26 37" stroke="rgba(255,255,255,0.12)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
@@ -20,7 +20,7 @@ export const EduweynMark = ({ size = 44 }: { size?: number }) => (
   </svg>
 );
 
-export const EduweynWordmark = ({ dark = true }: { dark?: boolean }) => (
+export const EduveynWordmark = ({ dark = true }: { dark?: boolean }) => (
   <div className="flex flex-col leading-none">
     <div className="flex items-baseline gap-0">
       <span className={`text-[18px] font-extrabold tracking-tight ${dark ? 'text-white' : 'text-gray-900'}`}>Edu</span>
@@ -32,10 +32,10 @@ export const EduweynWordmark = ({ dark = true }: { dark?: boolean }) => (
   </div>
 );
 
-export const EduweynLogo = ({ height = 38 }: { height?: number }) => (
+export const EduveynLogo = ({ height = 38 }: { height?: number }) => (
   <Image
     src={edulogo}
-    alt="Eduweyn"
+    alt="Eduveyn"
     height={height}
     width={0}
     style={{ height: `${height}px`, width: 'auto' }}
@@ -121,7 +121,7 @@ const parentLinks = [
 export default function Footer({ contact }: { contact: ISiteContentContact }) {
   const social = buildSocialLinks(contact);
   const phone = contact.phone || '+971 50 123 4567';
-  const email = contact.email || 'hello@eduweyn.com';
+  const email = contact.email || 'hello@eduveyn.com';
   const address = contact.address || 'Dubai, UAE';
 
   return (
@@ -134,7 +134,7 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
           {/* Col 1 — Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-4 group w-fit hover:opacity-90 transition-opacity duration-300">
-              <EduweynLogo height={38} />
+              <EduveynLogo height={38} />
             </Link>
 
             <p className="text-gray-400 text-xs leading-relaxed mb-5 max-w-[220px]">
@@ -150,18 +150,6 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
                   {s.icon}
                 </a>
               ))}
-            </div>
-
-            {/* Newsletter */}
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Get updates..."
-                className="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 placeholder-gray-400 outline-none focus:border-[#4915b0] transition-colors"
-              />
-              <button className="shrink-0 bg-[#F59E0B] text-gray-900 font-bold px-3.5 py-2 rounded-lg text-xs hover:bg-amber-400 transition-colors">
-                →
-              </button>
             </div>
           </div>
 
@@ -225,7 +213,7 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6">
-          <p className="text-gray-400 text-xs">© 2026 Eduweyn. All rights reserved.</p>
+          <p className="text-gray-400 text-xs">© 2026 Eduveyn. All rights reserved.</p>
           <p className="text-xs italic" style={{ color: '#F59E0B' }}>knowledge is the vein of growth</p>
           <div className="flex items-center gap-4 text-xs text-gray-400">
             <Link href="#" className="hover:text-gray-600 transition-colors">Privacy</Link>

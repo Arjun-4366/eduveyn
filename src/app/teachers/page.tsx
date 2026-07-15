@@ -1,7 +1,21 @@
+import type { Metadata } from 'next';
 import TeachersBrowser from '@/components/Teachers/TeachersBrowser';
 import { getTutors } from '@/services/tutor';
 import { safeFetch } from '@/lib/utils';
 import { ITutorListResponse } from '@/types/tutors/tutors';
+
+export const metadata: Metadata = {
+  title: 'Find a Tutor',
+  description: 'Browse verified online tutors on Eduveyn, filter by subject and rating, and book a free demo class with the right tutor for your child.',
+  alternates: {
+    canonical: '/teachers',
+  },
+  openGraph: {
+    url: '/teachers',
+    title: 'Find a Tutor | Eduveyn',
+    description: 'Browse verified online tutors on Eduveyn and book a free demo class.',
+  },
+};
 
 const EMPTY_RESULT: ITutorListResponse = {
   success: true,

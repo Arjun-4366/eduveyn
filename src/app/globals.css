@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* This site is light-only by design (no dark theme exists). Without this,
+     browsers on a dark OS/browser theme (notably Safari on macOS/iOS) apply
+     dark styling to anything not explicitly colored — native form controls,
+     scrollbars, and Safari's rubber-band overscroll bounce area, which
+     renders black instead of white without this declaration. */
+  color-scheme: light;
 }
 
 @theme inline {
@@ -20,6 +26,38 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-plus-jakarta), sans-serif;
+}
+
+/* ── Lenis smooth-scroll required styles ──────────────────────────────────
+   Mirrors lenis/dist/lenis.css. Without the `height: auto` rule below,
+   Lenis's virtual-scroll limits desync from the real page height, which
+   makes wheel/trackpad scrolling stick partway down while the native
+   scrollbar still works. Keep this in sync with the installed lenis version. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
 }
 
 @utility hero-grid-bg {

@@ -126,7 +126,7 @@ export default function DemoBookingForm({ classes, subjects }: { classes: IClass
               variants={slideLeft}
               initial="hidden"
               animate="visible"
-              className="lg:sticky lg:top-24"
+              className="order-2 lg:order-1 lg:sticky lg:top-24"
             >
               <div className="rounded-[30px] sm:rounded-[35px] md:rounded-[40px] overflow-hidden shadow-2xl rotate-1 hover:rotate-0 transition-transform duration-500"
                 style={{ backgroundColor: '#4915b0' }}>
@@ -198,6 +198,7 @@ export default function DemoBookingForm({ classes, subjects }: { classes: IClass
               variants={slideRight}
               initial="hidden"
               animate="visible"
+              className="order-1 lg:order-2"
             >
               <div className="rounded-[30px] sm:rounded-[35px] md:rounded-[40px] overflow-hidden shadow-xl border-[4px] sm:border-[5px] border-[#F59E0B]">
                 {/* Amber top strip */}

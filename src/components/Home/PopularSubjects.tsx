@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { fadeUp, stagger, scaleIn } from '@/lib/animations';
 import { ISubject } from '@/types/subjects/subjects';
-import { getSubjectIcon } from '@/lib/subjectIcons';
+import IconGlyph from '@/components/ui/IconGlyph';
 
 const frameColors = ['#4915b0', '#D97706', '#DB2777', '#0369A1', '#059669', '#EA580C'];
 
@@ -55,11 +55,10 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4"
+          className="grid grid-cols-[repeat(auto-fit,minmax(130px,200px))] justify-center gap-3 sm:gap-4"
         >
           {subjects.map((subject, i) => {
             const color = frameColors[i % frameColors.length];
-            const Icon = getSubjectIcon(subject.icon);
             return (
               <motion.div key={subject.id} variants={scaleIn}>
                 <div className="block bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm">
@@ -69,7 +68,7 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
                     style={{ backgroundColor: color }}
                   >
                     <div className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white">
-                      <Icon size={28} />
+                      <IconGlyph value={subject.icon} size={28} />
                     </div>
                   </div>
 

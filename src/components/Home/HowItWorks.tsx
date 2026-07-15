@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { fadeUp, stagger, scaleIn } from '@/lib/animations';
 import { ISiteContentSteps } from '@/types/siteContent/siteContent';
-import { getSubjectIcon } from '@/lib/subjectIcons';
+import IconGlyph from '@/components/ui/IconGlyph';
 import { splitHeadlineEmphasis } from '@/lib/utils';
 
 // ── Decorative accents (same as HomeServices / TeacherHighlights) ─────────
@@ -116,7 +116,6 @@ export default function HowItWorks({ steps: stepsContent }: { steps: ISiteConten
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
         >
           {steps.map((step, i) => {
-            const StepIcon = getSubjectIcon(step.icon);
             return (
             <motion.div key={step.title} variants={scaleIn} className="relative">
 
@@ -161,7 +160,7 @@ export default function HowItWorks({ steps: stepsContent }: { steps: ISiteConten
                   <div className="flex items-start justify-between">
                     {/* Icon box */}
                     <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white group-hover:scale-110 transition-transform duration-300">
-                      <StepIcon size={22} />
+                      <IconGlyph value={step.icon} size={22} />
                     </div>
                     {/* Large muted step number */}
                     <span className="text-4xl sm:text-5xl font-black text-white/20 leading-none select-none -mt-1">

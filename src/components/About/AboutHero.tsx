@@ -42,7 +42,7 @@ const Float = ({ children, delay = 0 }: { children: React.ReactNode; delay?: num
 
 export default function AboutHero({ about }: { about: ISiteContentAbout }) {
   const title = about.aboutTitle || DEFAULT_ABOUT_TITLE;
-  const subtitle = about.aboutSubtitle || "Eduweyn was built by educators and parents who were frustrated with one-size-fits-all tutoring. We set out to create something different — a platform where every student gets the individual attention they deserve.";
+  const subtitle = about.aboutSubtitle || "Eduveyn was built by educators and parents who were frustrated with one-size-fits-all tutoring. We set out to create something different — a platform where every student gets the individual attention they deserve.";
   const { lead, emphasis } = splitHeadlineEmphasis(title);
 
   return (

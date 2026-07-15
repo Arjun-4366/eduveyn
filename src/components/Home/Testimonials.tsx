@@ -180,7 +180,7 @@ function ReviewFormCard({ onClose, onSubmitted }: { onClose: () => void; onSubmi
               id="review-message"
               value={message}
               onChange={(e) => { setMessage(e.target.value); setErrors((prev) => ({ ...prev, message: undefined })); }}
-              placeholder="Tell us about your experience with Eduweyn..."
+              placeholder="Tell us about your experience with Eduveyn..."
               rows={4}
               className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 sm:py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-[#4915b0] focus:bg-white transition-colors resize-none"
             />
@@ -329,7 +329,7 @@ export default function Testimonials({ reviews: initialReviews }: { reviews: IRe
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+                    className="grid grid-cols-[repeat(auto-fit,minmax(280px,380px))] justify-center gap-6 sm:gap-8"
                   >
                     {visible?.map((review, i) => (
                       <motion.div

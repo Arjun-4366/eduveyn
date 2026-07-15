@@ -117,7 +117,7 @@ export default function TeacherApplicationForm({
               >
                 Apply to Join{' '}
                 <span className="relative inline-block text-[#4915b0]">
-                  Eduweyn
+                  Eduveyn
                   <svg className="absolute left-0 w-full -bottom-1 sm:-bottom-1.5" height="6" viewBox="0 0 80 6" preserveAspectRatio="none">
                     <path d="M0,3 C20,0 60,6 80,3" stroke="#F59E0B" strokeWidth="3" fill="none" strokeLinecap="round" />
                   </svg>

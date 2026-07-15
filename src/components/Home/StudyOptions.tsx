@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { fadeUp, stagger, scaleIn } from '@/lib/animations';
 import { ISiteContentPricing } from '@/types/siteContent/siteContent';
-import { getSubjectIcon } from '@/lib/subjectIcons';
+import IconGlyph from '@/components/ui/IconGlyph';
 import { splitHeadlineEmphasis } from '@/lib/utils';
 
 const DEFAULT_PRICING_TITLE = 'A Learning Style for Every Child';
@@ -99,10 +99,9 @@ export default function StudyOptions({ pricing }: { pricing: ISiteContentPricing
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
+          className="grid grid-cols-[repeat(auto-fit,minmax(240px,300px))] justify-center gap-6 sm:gap-8"
         >
           {options.map((option, i) => {
-            const Icon = getSubjectIcon(option.icon);
             const frameColor = frameColors[i % frameColors.length];
             return (
               <motion.div key={option.title} variants={scaleIn} className="relative">
@@ -127,7 +126,7 @@ export default function StudyOptions({ pricing }: { pricing: ISiteContentPricing
                   <div className="pt-4 sm:pt-5 md:pt-6 px-4 sm:px-5 pb-4 sm:pb-5">
                     <div className="flex items-start justify-between mb-4 sm:mb-5">
                       <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white group-hover:scale-110 transition-transform duration-300">
-                        <Icon size={22} />
+                        <IconGlyph value={option.icon} size={22} />
                       </div>
                       {option.badge && (
                         <span className="text-[9px] sm:text-[10px] font-bold text-white bg-white/20 backdrop-blur-sm px-2 sm:px-2.5 py-1 rounded-full">

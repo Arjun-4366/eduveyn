@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { fadeUp, stagger, scaleIn } from '@/lib/animations';
 import { ISiteContentWhyChooseUs } from '@/types/siteContent/siteContent';
 import { splitHeadlineEmphasis } from '@/lib/utils';
-import { getSubjectIcon } from '@/lib/subjectIcons';
+import IconGlyph from '@/components/ui/IconGlyph';
 
 const DEFAULT_WHY_TITLE = 'Why Families Choose Us';
 
@@ -50,8 +50,8 @@ const DEFAULT_REASONS = [
 
 // ── Section ─────────────────────────────────────────────────────────────
 
-export default function WhyChooseEduweyn({ header }: { header: ISiteContentWhyChooseUs }) {
-  const subtitle = header.subtitle || "Six reasons parents trust Eduweyn with their child's learning journey.";
+export default function WhyChooseEduveyn({ header }: { header: ISiteContentWhyChooseUs }) {
+  const subtitle = header.subtitle || "Six reasons parents trust Eduveyn with their child's learning journey.";
   const title = header.title || DEFAULT_WHY_TITLE;
   const { lead: titleLead, emphasis: titleEmphasis } = splitHeadlineEmphasis(title);
   const reasons = header.items && header.items.length > 0 ? header.items : DEFAULT_REASONS;
@@ -72,7 +72,7 @@ export default function WhyChooseEduweyn({ header }: { header: ISiteContentWhyCh
             variants={fadeUp}
             className="inline-block text-[10px] sm:text-xs font-semibold uppercase tracking-widest px-4 sm:px-5 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-5 bg-white border border-gray-200 text-gray-500"
           >
-            Why Eduweyn
+            Why Eduveyn
           </motion.span>
           <motion.h2
             variants={fadeUp}
@@ -114,10 +114,9 @@ export default function WhyChooseEduweyn({ header }: { header: ISiteContentWhyCh
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-[repeat(auto-fit,minmax(280px,380px))] justify-center gap-6 sm:gap-8"
         >
           {reasons.map((reason, i) => {
-            const Icon = getSubjectIcon(reason.icon);
             return (
             <motion.div key={reason.title} variants={scaleIn} className="relative">
 
@@ -150,7 +149,7 @@ export default function WhyChooseEduweyn({ header }: { header: ISiteContentWhyCh
               >
                 <div className="pt-4 sm:pt-5 md:pt-6 px-4 sm:px-5 pb-4 sm:pb-5">
                   <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/20 text-white group-hover:scale-110 transition-transform duration-300">
-                    <Icon size={20} />
+                    <IconGlyph value={reason.icon} size={20} />
                   </div>
                 </div>
 

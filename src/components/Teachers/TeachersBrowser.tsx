@@ -250,7 +250,7 @@ export default function TeachersBrowser({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8"
+                className="grid grid-cols-[repeat(auto-fit,minmax(150px,260px))] justify-center gap-3 sm:gap-5 md:gap-8"
               >
                 {Array.from({ length: 6 }).map((_, i) => (
                   <SkeletonCard key={i} index={i} />
@@ -263,7 +263,7 @@ export default function TeachersBrowser({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-8"
+                className="grid grid-cols-[repeat(auto-fit,minmax(150px,260px))] justify-center gap-3 sm:gap-5 md:gap-8"
               >
                 {tutors.map((t, i) => {
                   const frameColor = tutorFrameColors[i % tutorFrameColors.length];

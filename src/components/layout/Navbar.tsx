@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { EduweynLogo } from '@/components/layout/Footer';
+import { EduveynLogo } from '@/components/layout/Footer';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -36,7 +36,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="shrink-0 flex items-center gap-1 group hover:opacity-90 transition-opacity duration-300">
-          <EduweynLogo height={30} />
+          <EduveynLogo height={30} />
           <span className="text-xl sm:text-2xl font-semibold italic tracking-tight text-[#002860]">
             Edu<span className="text-[#00A0A8]">veyn</span>
           </span>
@@ -124,6 +124,16 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/register/teacher"
+                className={`py-3 px-3 rounded-xl font-medium text-sm transition-colors ${
+                  pathname === '/register/teacher'
+                    ? 'bg-violet-50 text-[#4915b0]'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Become a Tutor
+              </Link>
               <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-gray-100">
                 <Link
                   href="/login"
