@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     title: 'Contact Eduveyn',
     description: 'Get in touch with Eduveyn by WhatsApp, email, or phone.',
   },
+  twitter: {
+    title: 'Contact Eduveyn',
+    description: 'Get in touch with Eduveyn by WhatsApp, email, or phone.',
+  },
 };
 
 export default async function ContactPage() {

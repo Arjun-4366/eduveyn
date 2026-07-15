@@ -15,6 +15,10 @@ export const metadata: Metadata = {
     title: 'Find a Tutor | Eduveyn',
     description: 'Browse verified online tutors on Eduveyn and book a free demo class.',
   },
+  twitter: {
+    title: 'Find a Tutor | Eduveyn',
+    description: 'Browse verified online tutors on Eduveyn and book a free demo class.',
+  },
 };
 
 const EMPTY_RESULT: ITutorListResponse = {

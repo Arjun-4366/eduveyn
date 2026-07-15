@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     title: 'About Eduveyn',
     description: "Learn about Eduveyn's mission to connect students with verified, expert online tutors for personalized, one-on-one learning.",
   },
+  twitter: {
+    title: 'About Eduveyn',
+    description: "Learn about Eduveyn's mission to connect students with verified, expert online tutors for personalized, one-on-one learning.",
+  },
 };
 
 export default function AboutPage() {

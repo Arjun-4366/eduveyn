@@ -15,6 +15,10 @@ export const metadata: Metadata = {
     title: 'Book a Free Demo Class | Eduveyn',
     description: 'Book a free online demo class with a verified Eduveyn tutor.',
   },
+  twitter: {
+    title: 'Book a Free Demo Class | Eduveyn',
+    description: 'Book a free online demo class with a verified Eduveyn tutor.',
+  },
 };
 
 export default async function DemoPage() {

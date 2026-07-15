@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     title: 'Browse Subjects | Eduveyn',
     description: 'Explore all subjects available on Eduveyn and find expert online tutors for each.',
   },
+  twitter: {
+    title: 'Browse Subjects | Eduveyn',
+    description: 'Explore all subjects available on Eduveyn and find expert online tutors for each.',
+  },
 };
 
 export default async function SubjectsPage({

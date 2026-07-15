@@ -16,6 +16,10 @@ export const metadata: Metadata = {
     title: 'Become a Tutor | Eduveyn',
     description: 'Join Eduveyn as an online tutor and teach students one-on-one, on your own schedule.',
   },
+  twitter: {
+    title: 'Become a Tutor | Eduveyn',
+    description: 'Join Eduveyn as an online tutor and teach students one-on-one, on your own schedule.',
+  },
 };
 
 export default async function TeacherRegisterPage() {
