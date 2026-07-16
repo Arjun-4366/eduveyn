@@ -70,7 +70,7 @@ export default function TeacherApplicationForm({
   const className = (id: string) => classes.find((c) => c.id === id)?.name ?? id;
   const syllabusLabel = (id: string) => {
     const syllabus = syllabi.find((s) => s.id === id);
-    return syllabus ? `${syllabus.subject.name} · ${syllabus.class.name} · ${syllabus.board}` : id;
+    return syllabus ? syllabus.board : id;
   };
 
   return (
@@ -278,7 +278,7 @@ export default function TeacherApplicationForm({
                                   : { backgroundColor: 'white', color: '#6B7280', borderColor: '#E5E7EB' }
                                 }
                               >
-                                {syl.subject.name} · {syl.class.name} · {syl.board}
+                                {syl.board}
                               </button>
                             ))}
                           </div>

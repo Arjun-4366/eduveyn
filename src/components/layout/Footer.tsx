@@ -133,12 +133,15 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
 
           {/* Col 1 — Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-4 group w-fit hover:opacity-90 transition-opacity duration-300">
+            <Link href="/" className="inline-flex items-center gap-1 mb-4 group w-fit hover:opacity-90 transition-opacity duration-300">
               <EduveynLogo height={38} />
+              <span className="text-2xl sm:text-3xl font-semibold italic tracking-tight text-[#002860]">
+                Edu<span className="text-[#00A0A8]">veyn</span>
+              </span>
             </Link>
 
-            <p className="text-gray-400 text-xs leading-relaxed mb-5 max-w-[220px]">
-              Expert online tutors for Maths, Science, English, Arabic, Coding, and more. First class is always free.
+            <p className="text-gray-800 text-xs leading-relaxed mb-5 max-w-[220px]">
+              Expert tutors. Flexible schedules. Real results. Helping every child unlock their full potential — one lesson at a time
             </p>
 
             <div className="flex items-center gap-2 mb-6">
@@ -160,7 +163,7 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
               {exploreLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href}
-                    className="text-gray-500 hover:text-[#4915b0] text-sm transition-colors duration-200">
+                    className="text-gray-800 hover:text-[#4915b0] text-sm transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -175,7 +178,7 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
               {parentLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href}
-                    className="text-gray-500 hover:text-[#4915b0] text-sm transition-colors duration-200">
+                    className="text-gray-800 hover:text-[#4915b0] text-sm transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -194,7 +197,7 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
               ].map((item) => (
                 <li key={item.value}>
                   <a href={item.href}
-                    className="flex items-center gap-2.5 text-gray-500 hover:text-gray-800 text-sm transition-colors duration-200">
+                    className="flex items-center gap-2.5 text-gray-800 hover:text-gray-800 text-sm transition-colors duration-200">
                     <span className="text-base leading-none">{item.icon}</span>
                     {item.value}
                   </a>
@@ -213,8 +216,7 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6">
-          <p className="text-gray-400 text-xs">© 2026 Eduveyn. All rights reserved.</p>
-          <p className="text-xs italic" style={{ color: '#F59E0B' }}>knowledge is the vein of growth</p>
+          <p className="text-gray-800 text-xs">© 2026 Eduveyn. All rights reserved.</p>
           <div className="flex items-center gap-4 text-xs text-gray-400">
             <Link href="#" className="hover:text-gray-600 transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-gray-600 transition-colors">Terms</Link>

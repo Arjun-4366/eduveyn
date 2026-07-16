@@ -26,6 +26,7 @@ export default async function TeacherRegisterPage() {
   const subjects = await safeFetch(async () => (await getSubjects()).data, []);
   const classes = await safeFetch(async () => (await getClasses()).data, []);
   const syllabi = await safeFetch(async () => (await getSyllabi()).data, []);
+  console.log("syllabi",syllabi)
 
   return <TeacherApplicationForm subjects={subjects} classes={classes} syllabi={syllabi} />;
 }
