@@ -46,10 +46,26 @@ export default function TeacherApplicationForm({
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [step1Error, setStep1Error] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
 
   const toggleId = (key: 'subject_ids' | 'class_ids' | 'syllabus_ids', id: string) =>
     setForm((f) => ({ ...f, [key]: f[key].includes(id) ? f[key].filter((x) => x !== id) : [...f[key], id] }));
+
+  const goToStep2 = () => {
+    const isStep1Valid =
+      form.full_name.trim() !== '' &&
+      form.email.trim() !== '' &&
+      form.phone.trim() !== '' &&
+      form.location.trim() !== '';
+
+    if (!isStep1Valid) {
+      setStep1Error('Please fill in all fields before continuing.');
+      return;
+    }
+    setStep1Error(null);
+    setStep(2);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,9 +218,12 @@ export default function TeacherApplicationForm({
                             />
                           </div>
                         ))}
+                        {step1Error && (
+                          <p className="text-red-500 text-xs sm:text-sm bg-red-50 border border-red-100 rounded-xl px-3 py-2">{step1Error}</p>
+                        )}
                         <button
                           type="button"
-                          onClick={() => setStep(2)}
+                          onClick={goToStep2}
                           className="w-full bg-[#4915b0] text-white font-bold py-3 sm:py-3.5 rounded-xl hover:bg-[#3a0f95] transition-colors text-sm mt-1 sm:mt-2 shadow-lg shadow-violet-200"
                         >
                           Continue →

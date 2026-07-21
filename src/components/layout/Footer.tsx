@@ -48,7 +48,7 @@ export const EduveynLogo = ({ height = 38 }: { height?: number }) => (
 const buildSocialLinks = (contact: ISiteContentContact) => [
   {
     label: 'WhatsApp',
-    href: contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, '')}` : '#',
+    href: contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, '')}` : null,
     color: '#22C55E',
     icon: (
       <svg width="15" height="15" viewBox="0 0 28 28" fill="white">
@@ -57,7 +57,7 @@ const buildSocialLinks = (contact: ISiteContentContact) => [
     ),
   },
   {
-    label: 'Instagram', href: contact?.social?.instagram || '#', color: '#E1306C',
+    label: 'Instagram', href: contact?.social?.instagram || null, color: '#E1306C',
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5" />
@@ -67,7 +67,7 @@ const buildSocialLinks = (contact: ISiteContentContact) => [
     ),
   },
   {
-    label: 'Facebook', href: contact.social?.facebook || '#', color: '#1877F2',
+    label: 'Facebook', href: contact.social?.facebook || null, color: '#1877F2',
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -75,7 +75,7 @@ const buildSocialLinks = (contact: ISiteContentContact) => [
     ),
   },
   {
-    label: 'LinkedIn', href: contact.social?.linkedin || '#', color: '#0A66C2',
+    label: 'LinkedIn', href: contact.social?.linkedin || null, color: '#0A66C2',
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
         <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0zM7.27 20.1H3.65V9h3.62v11.1zM5.47 7.43c-1.16 0-2.1-.94-2.1-2.1 0-1.16.94-2.1 2.1-2.1 1.16 0 2.1.94 2.1 2.1 0 1.16-.93 2.1-2.1 2.1zM20.34 20.1h-3.62v-5.4c0-1.29-.02-2.94-1.79-2.94-1.8 0-2.08 1.4-2.08 2.85v5.49H9.23V9h3.47v1.52h.05c.48-.91 1.67-1.87 3.44-1.87 3.68 0 4.36 2.42 4.36 5.57v5.88z" />
@@ -83,7 +83,7 @@ const buildSocialLinks = (contact: ISiteContentContact) => [
     ),
   },
   {
-    label: 'X', href: contact.social?.x || '#', color: '#111827',
+    label: 'X', href: contact.social?.x || null, color: '#111827',
     icon: (
       <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -91,14 +91,14 @@ const buildSocialLinks = (contact: ISiteContentContact) => [
     ),
   },
   {
-    label: 'YouTube', href: contact.social?.youtube || '#', color: '#FF0000',
+    label: 'YouTube', href: contact.social?.youtube || null, color: '#FF0000',
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
         <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.51 3.5 12 3.5 12 3.5s-7.51 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14C4.49 20.5 12 20.5 12 20.5s7.51 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.57V8.43L15.82 12l-6.07 3.57z" />
       </svg>
     ),
   },
-];
+].filter((s): s is typeof s & { href: string } => Boolean(s.href));
 
 const exploreLinks = [
   { label: 'Home', href: '/' },
