@@ -126,13 +126,21 @@ export default function TeacherHighlights({ tutors }: { tutors: ITutor[] }) {
                   <div className="flex justify-center">
                     <div className="p-0.5 sm:p-1 rounded-[16px] sm:rounded-[18px] md:rounded-[20px] bg-white/30">
                       <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-[12px] sm:rounded-[14px] md:rounded-[16px] overflow-hidden">
-                        <Image
-                          src={t.profile_image}
-                          alt={t.name}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
-                        />
+                        {t.profile_image ? (
+                          <Image
+                            src={t.profile_image}
+                            alt={t.name}
+                            width={80}
+                            height={80}
+                            className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-full flex items-center justify-center text-xl sm:text-2xl font-extrabold text-white bg-black/15"
+                          >
+                            {t.name.charAt(0).toUpperCase()}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

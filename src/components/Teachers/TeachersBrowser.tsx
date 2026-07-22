@@ -291,13 +291,19 @@ export default function TeachersBrowser({
                           <div className="flex justify-center">
                             <div className="p-0.5 sm:p-1 rounded-[14px] sm:rounded-[16px] md:rounded-[20px] bg-white/30">
                               <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-[10px] sm:rounded-[12px] md:rounded-[16px] overflow-hidden">
-                                <Image
-                                  src={t.profile_image}
-                                  alt={t.name}
-                                  width={80}
-                                  height={80}
-                                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
-                                />
+                                {t.profile_image ? (
+                                  <Image
+                                    src={t.profile_image}
+                                    alt={t.name}
+                                    width={80}
+                                    height={80}
+                                    className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-lg sm:text-xl md:text-2xl font-extrabold text-white bg-black/15">
+                                    {t.name.charAt(0).toUpperCase()}
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </div>

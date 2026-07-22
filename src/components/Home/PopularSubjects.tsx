@@ -55,12 +55,12 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-[repeat(auto-fit,minmax(130px,200px))] justify-center gap-3 sm:gap-4"
+          className="flex flex-wrap justify-center gap-3 sm:gap-4"
         >
           {subjects.map((subject, i) => {
             const color = frameColors[i % frameColors.length];
             return (
-              <motion.div key={subject.id} variants={scaleIn}>
+              <motion.div key={subject.id} variants={scaleIn} className="w-[clamp(130px,18vw,200px)]">
                 <div className="block bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm">
                   {/* Vivid colored frame */}
                   <div
