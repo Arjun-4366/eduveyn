@@ -33,19 +33,19 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
             variants={fadeUp}
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 px-2 sm:px-0"
           >
-            Learn What You{' '}
+            Wide Range of {' '}
             <span className="relative inline-block">
-              Love
-              <svg className="absolute left-0 w-full -bottom-2" height="8" viewBox="0 0 60 8" preserveAspectRatio="none">
-                <path d="M0,4 C15,0 45,8 60,4" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+              Subjects
+              <svg className="absolute left-0 w-full -bottom-4" height="8" viewBox="0 0 60 8" preserveAspectRatio="none">
+                <path d="M0,5 C22,0 42,9 60,3" stroke="#F59E0B" strokeWidth="3.5" fill="none" strokeLinecap="round" />
               </svg>
             </span>
           </motion.h2>
           <motion.p
             variants={fadeUp}
-            className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base mt-3 sm:mt-4 px-2 sm:px-0"
+            className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base mt-4 sm:mt-4 px-2 sm:px-0"
           >
-            Expert tutors across all core subjects, ready to help your child excel.
+            Comprehensive academic support from primary to higher secondary levels.
           </motion.p>
         </motion.div>
 
@@ -76,7 +76,6 @@ export default function PopularSubjects({ subjects }: { subjects: ISubject[] }) 
                   <div className="px-2 sm:px-3 pb-3 sm:pb-4 pt-2 sm:pt-3 text-center">
                     <p className="font-bold text-gray-900 text-xs sm:text-sm">{subject.name}</p>
                     <div className="flex items-center justify-center gap-1 mt-1">
-                      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }} />
                       <p className="text-[10px] sm:text-xs text-gray-400">{subject.tutor_count} teachers</p>
                     </div>
                   </div>
