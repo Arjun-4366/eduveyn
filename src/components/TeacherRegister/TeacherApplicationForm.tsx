@@ -24,14 +24,16 @@ type FormState = {
   syllabus_ids: string[];
   experience: string;
   bio: string;
-  resume_url: string;
+  resume: File | null;
 };
 
 const emptyForm: FormState = {
   full_name: '', email: '', phone: '', location: '',
   subject_ids: [], class_ids: [], syllabus_ids: [],
-  experience: '', bio: '', resume_url: '',
+  experience: '', bio: '', resume: null,
 };
+
+const ALLOWED_RESUME_EXTENSIONS = ['.pdf', '.doc', '.docx'];
 
 export default function TeacherApplicationForm({
   subjects,
@@ -47,10 +49,28 @@ export default function TeacherApplicationForm({
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [step1Error, setStep1Error] = useState<string | null>(null);
+  const [resumeError, setResumeError] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
 
   const toggleId = (key: 'subject_ids' | 'class_ids' | 'syllabus_ids', id: string) =>
     setForm((f) => ({ ...f, [key]: f[key].includes(id) ? f[key].filter((x) => x !== id) : [...f[key], id] }));
+
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (!file) {
+      setForm((f) => ({ ...f, resume: null }));
+      return;
+    }
+    const extension = file.name.slice(file.name.lastIndexOf('.')).toLowerCase();
+    if (!ALLOWED_RESUME_EXTENSIONS.includes(extension)) {
+      setResumeError('Please upload a .pdf, .doc, or .docx file.');
+      setForm((f) => ({ ...f, resume: null }));
+      e.target.value = '';
+      return;
+    }
+    setResumeError(null);
+    setForm((f) => ({ ...f, resume: file }));
+  };
 
   const goToStep2 = () => {
     const isStep1Valid =
@@ -69,10 +89,14 @@ export default function TeacherApplicationForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.resume) {
+      setResumeError('Please upload your resume (.pdf, .doc, or .docx).');
+      return;
+    }
     setSubmitting(true);
     setSubmitError(null);
     try {
-      await createTutorApplication(form);
+      await createTutorApplication({ ...form, resume: form.resume });
       setSubmitted(true);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Failed to submit application. Please try again.');
@@ -82,12 +106,9 @@ export default function TeacherApplicationForm({
   };
 
   const currentStep = steps[step - 1];
-  const subjectName = (id: string) => subjects.find((s) => s.id === id)?.name ?? id;
-  const className = (id: string) => classes.find((c) => c.id === id)?.name ?? id;
-  const syllabusLabel = (id: string) => {
-    const syllabus = syllabi.find((s) => s.id === id);
-    return syllabus ? syllabus.board : id;
-  };
+  const subjectName = (id: string) => subjects.find((s) => s.id === id)?.name;
+  const className = (id: string) => classes.find((c) => c.id === id)?.name;
+  const syllabusLabel = (id: string) => syllabi.find((s) => s.id === id)?.board;
 
   return (
     <main className="min-h-screen bg-[#F0F2F5] hero-grid-bg py-12 sm:py-16 px-4 sm:px-6 overflow-hidden">
@@ -327,15 +348,20 @@ export default function TeacherApplicationForm({
                         </div>
 
                         <div>
-                          <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Resume Link (Optional)</label>
+                          <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Resume *</label>
                           <input
-                            type="url"
-                            placeholder="https://drive.google.com/…"
-                            value={form.resume_url}
-                            onChange={(e) => setForm({ ...form, resume_url: e.target.value })}
-                            className="w-full border border-gray-200 rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-sm outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-100 transition-all placeholder-gray-400"
+                            type="file"
+                            accept=".pdf,.doc,.docx"
+                            onChange={handleResumeChange}
+                            className="w-full border border-gray-200 rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-sm outline-none focus:border-[#D97706] focus:ring-2 focus:ring-amber-100 transition-all file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-700"
                           />
-                          <p className="text-[10px] sm:text-xs text-gray-400 mt-1">Paste a shareable link to your resume (Google Drive, Dropbox, etc.)</p>
+                          {resumeError ? (
+                            <p className="text-red-500 text-[10px] sm:text-xs mt-1">{resumeError}</p>
+                          ) : (
+                            <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
+                              {form.resume ? form.resume.name : 'Accepted formats: .pdf, .doc, .docx'}
+                            </p>
+                          )}
                         </div>
 
                         <div className="flex gap-2 sm:gap-3">
@@ -369,11 +395,11 @@ export default function TeacherApplicationForm({
                             { label: 'Email',      value: form.email },
                             { label: 'Phone',      value: form.phone },
                             { label: 'Location',   value: form.location },
-                            { label: 'Subjects',   value: form.subject_ids.map(subjectName).join(', ') || '—' },
-                            { label: 'Classes',    value: form.class_ids.map(className).join(', ') || '—' },
-                            { label: 'Syllabi',    value: form.syllabus_ids.map(syllabusLabel).join(', ') || '—' },
+                            { label: 'Subjects',   value: form.subject_ids.map(subjectName).filter(Boolean).join(', ') || '—' },
+                            { label: 'Classes',    value: form.class_ids.map(className).filter(Boolean).join(', ') || '—' },
+                            { label: 'Syllabi',    value: form.syllabus_ids.map(syllabusLabel).filter(Boolean).join(', ') || '—' },
                             { label: 'Experience', value: form.experience || '—' },
-                            { label: 'Resume',     value: form.resume_url || 'Not provided' },
+                            { label: 'Resume',     value: form.resume?.name || 'Not provided' },
                           ].map((item) => (
                             <div key={item.label} className="flex justify-between items-start gap-3 sm:gap-4 pb-2.5 sm:pb-3 border-b border-gray-200 last:border-0 last:pb-0">
                               <span className="text-gray-400 shrink-0 text-[10px] sm:text-xs">{item.label}</span>

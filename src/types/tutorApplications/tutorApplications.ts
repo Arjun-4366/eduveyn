@@ -29,7 +29,7 @@ export interface ITutorApplicationPayload {
   syllabus_ids: string[];
   experience: string;
   bio: string;
-  resume_url: string;
+  resume: File;
 }
 
 export interface ITutorApplicationResponse {

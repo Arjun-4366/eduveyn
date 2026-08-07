@@ -2,10 +2,12 @@
 
 import { motion } from 'framer-motion';
 
-export default function FloatingWhatsApp() {
+export default function FloatingWhatsApp({ whatsapp }: { whatsapp: string }) {
+  if (!whatsapp) return null;
+
   return (
     <motion.a
-      href="https://wa.me/971501234567"
+      href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
       target="_blank"
       rel="noopener noreferrer"
       initial={{ opacity: 0, scale: 0.5 }}
