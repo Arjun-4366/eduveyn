@@ -93,6 +93,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const siteContent = await safeFetch(async () => (await getSiteContent()).data, EMPTY_SITE_CONTENT);
+  console.log("content",siteContent)
 
   const organizationJsonLd = {
     "@context": "https://schema.org",

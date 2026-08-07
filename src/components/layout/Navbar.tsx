@@ -66,12 +66,6 @@ export default function Navbar() {
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/login"
-            className="text-sm font-semibold text-gray-700 hover:text-[#4915b0] transition-colors px-4 py-2"
-          >
-            Login
-          </Link>
-          <Link
             href="/demo"
             className="bg-[#F59E0B] text-gray-900 font-semibold px-6 py-2.5 rounded-full text-sm hover:bg-amber-400 transition-colors"
           >
