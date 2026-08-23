@@ -43,6 +43,12 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
     if (window.location.hash) setTimeout(handleHashChange, 200);
 
+    // Allow other components (e.g. modals) to pause/resume Lenis via custom events
+    const handleStop = () => lenis.stop();
+    const handleStart = () => lenis.start();
+    window.addEventListener('lenis:stop', handleStop);
+    window.addEventListener('lenis:start', handleStart);
+
     let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
@@ -56,6 +62,8 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       lenisRef.current = null;
       document.removeEventListener('click', handleClick);
       window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('lenis:stop', handleStop);
+      window.removeEventListener('lenis:start', handleStart);
     };
   }, []);
 

@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import heroLeft from '@/assets/images/heroleft.png';
-import heroRight from '@/assets/images/heroright.png';
+import heroLeft from '@/assets/images/kidleft.webp';
+import heroRight from '@/assets/images/kidright.webp';
 import { fadeUp, stagger, slideLeft, slideRight } from '@/lib/animations';
 import { ISiteContentHeader } from '@/types/siteContent/siteContent';
 import { splitHeadlineEmphasis } from '@/lib/utils';
@@ -26,22 +26,25 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
   const { lead, emphasis } = splitHeadlineEmphasis(title);
 
   return (
-    <section className="relative overflow-hidden bg-[#F5F5F7] hero-grid-bg">
-      <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[580px] px-4 sm:px-6 lg:px-10 xl:px-16">
+    <section className="relative overflow-hidden  bg-[#F5F5F7] hero-grid-bg">
+      <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[540px] px-4 sm:px-6 lg:px-10 xl:px-16">
 
         {/* Left student image - Hidden on mobile/tablet, visible on desktop */}
         <motion.div
           variants={slideLeft}
           initial="hidden"
           animate="visible"
-          className="relative self-end shrink-0 w-full sm:w-[280px] h-[400px] sm:h-[450px] lg:h-[500px] mx-auto lg:mx-0 lg:ml-6 hidden lg:block"
+          className="relative self-end shrink-0 hidden lg:flex items-end justify-center w-[300px] xl:w-[340px] h-[480px] xl:h-[520px] mx-auto lg:mx-0"
         >
-          <div className="absolute z-0 bg-amber-500 w-[190px] h-[240px] bottom-[50px] right-[-10px] rounded-[10px]" />
-          <div className="absolute z-10 overflow-hidden w-[248px] h-[470px] rounded-r-[200px] bottom-0 left-0">
-            <Image src={heroLeft} alt="Student with backpack" fill className="object-cover object-top" priority />
-          </div>
-          <div className="absolute z-20 bottom-[90px] left-[18px] text-[28px]">🍎</div>
-          <div className="absolute z-20 top-12 -right-4">
+          <Image
+            src={heroLeft}
+            alt="Student with backpack"
+            fill
+            className="object-contain object-bottom"
+            priority
+          />
+          {/* <div className="absolute z-20 bottom-[90px] left-[10px] text-[28px]">🍎</div> */}
+          <div className="absolute z-20 top-8 right-0">
             <OrangeAsterisk />
           </div>
         </motion.div>
@@ -131,13 +134,16 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
           variants={slideRight}
           initial="hidden"
           animate="visible"
-          className="relative self-end shrink-0 w-full sm:w-[310px] h-[400px] sm:h-[450px] lg:h-[500px] mx-auto lg:mx-0 lg:mr-6 hidden lg:block"
+          className="relative self-end shrink-0 hidden lg:flex items-end justify-center w-[300px] xl:w-[340px] h-[480px] xl:h-[520px] mx-auto lg:mx-0"
         >
-          <div className="absolute z-20 top-20 right-[50px] text-[32px]">💡</div>
-          <div className="absolute rounded-full z-0 w-[270px] h-[270px] bg-violet-600 bottom-0 right-3" />
-          <div className="absolute z-10 overflow-hidden w-[220px] h-[430px] [border-radius:130px_130px_110px_110px] bottom-0 right-9">
-            <Image src={heroRight} alt="Student with notebook" fill className="object-cover object-top" priority />
-          </div>
+          <Image
+            src={heroRight}
+            alt="Student with notebook"
+            fill
+            className="object-contain object-bottom"
+            priority
+          />
+          <div className="absolute z-20 top-16 right-[30px] text-[32px]">💡</div>
         </motion.div>
 
       </div>

@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import LenisProvider from "@/providers/LenisProvider";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
+import ContactPopup from "@/components/Home/ContactPopup";
 import { getSiteContent, EMPTY_SITE_CONTENT } from "@/services/siteContent";
 import { safeFetch } from "@/lib/utils";
 
@@ -120,6 +121,7 @@ export default async function RootLayout({
           </div>
           <Footer contact={siteContent.contact} />
           <FloatingWhatsApp whatsapp={siteContent.contact.whatsapp} />
+          <ContactPopup />
         </LenisProvider>
       </body>
     </html>

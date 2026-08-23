@@ -2,7 +2,11 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import type { StaticImageData } from 'next/image';
 import { slideLeft, slideRight, stagger, fadeUp } from '@/lib/animations';
+import service1 from "../../assets/images/service 1.webp"
+import service2 from "../../assets/images/service 2.webp"
+import service3 from "../../assets/images/service 3.webp"
 
 // ── Floating UI widget components ──────────────────────────────────────────
 
@@ -128,7 +132,7 @@ const features: {
   title: string;
   desc: string;
   bullets: string[];
-  image: string;
+  image: string | StaticImageData;
   frameColor: string;
   tiltClass: string;
   imageLeft: boolean;
@@ -142,7 +146,7 @@ const features: {
     title: 'Personalized Sessions\nfor Every Subject',
     desc: "Get personalized sessions with experienced tutors for every subject, from math to language arts, tailored to meet your child's individual learning needs, all managed through an interactive dashboard for real-time tracking.",
     bullets: ['Personalized Learning', 'Expert Tutors', 'Subject Variety', 'Interactive Dashboard'],
-    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&h=600&q=80',
+    image: service2,
     frameColor: '#7C3AED',
     tiltClass: 'rotate-2',
     imageLeft: true,
@@ -161,7 +165,7 @@ const features: {
     title: 'Learn at a Pace That\nWorks for You',
     desc: "There's no rush! You can take breaks, go back to things you enjoy, and spend as much time as you need on each lesson.",
     bullets: ['Flexible Learning Flow', 'Relaxed Learning Mode', 'Personalized Learning Journey', 'Pace Perfect'],
-    image: 'https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=800&h=600&q=80',
+    image: service1,
     frameColor: '#F59E0B',
     tiltClass: '-rotate-2',
     imageLeft: false,
@@ -180,7 +184,7 @@ const features: {
     title: 'Fun and Engaging\nLearning Tools',
     desc: 'Our platform uses interactive lessons and cool resources like games and quizzes to keep your child engaged and excited while learning new things.',
     bullets: ['Interactive Learning', 'Quizzes and Assessments', 'Gamified Resources'],
-    image: 'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&h=600&q=80',
+    image: service3,
     frameColor: '#7C3AED',
     tiltClass: 'rotate-1',
     imageLeft: true,
