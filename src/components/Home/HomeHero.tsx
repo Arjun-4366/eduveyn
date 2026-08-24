@@ -27,14 +27,14 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
 
   return (
     <section className="relative overflow-hidden  bg-[#F5F5F7] hero-grid-bg">
-      <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[540px] px-4 sm:px-6 lg:px-10 xl:px-16">
+      <div className="flex flex-col lg:flex-row items-stretch min-h-[580px] lg:min-h-[540px] px-4 sm:px-6 lg:px-10 xl:px-16 max-w-7xl mx-auto w-full">
 
         {/* Left student image - Hidden on mobile/tablet, visible on desktop */}
         <motion.div
           variants={slideLeft}
           initial="hidden"
           animate="visible"
-          className="relative self-end shrink-0 hidden lg:flex items-end justify-center w-[300px] xl:w-[340px] h-[480px] xl:h-[520px] mx-auto lg:mx-0"
+          className="relative self-end shrink-0 hidden lg:flex items-end justify-center w-[260px] xl:w-[300px] 2xl:w-[320px] h-[460px] xl:h-[500px] 2xl:h-[520px] mx-auto lg:mx-0"
         >
           <Image
             src={heroLeft}
@@ -134,7 +134,7 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
           variants={slideRight}
           initial="hidden"
           animate="visible"
-          className="relative self-end shrink-0 hidden lg:flex items-end justify-center w-[300px] xl:w-[340px] h-[480px] xl:h-[520px] mx-auto lg:mx-0"
+          className="relative self-end shrink-0 hidden lg:flex items-end justify-center w-[260px] xl:w-[300px] 2xl:w-[320px] h-[460px] xl:h-[500px] 2xl:h-[520px] mx-auto lg:mx-0"
         >
           <Image
             src={heroRight}
