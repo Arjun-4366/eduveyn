@@ -17,7 +17,7 @@ import { safeFetch } from '@/lib/utils';
 
 const Home = async () => {
   const reviews = await safeFetch(async () => (await getReviews({ limit: 20 })).data.reviews, []);
-  const tutors = await safeFetch(async () => (await getTutors({ limit: 3 })).data.tutors, []);
+  const tutors = await safeFetch(async () => (await getTutors({ limit: 6 })).data.tutors, []);
   const faqs = await safeFetch(async () => (await getFaqs()).data, []);
   const subjects = await safeFetch(async () => (await getSubjects()).data, []);
   const siteContent = await safeFetch(async () => (await getSiteContent()).data, EMPTY_SITE_CONTENT);

@@ -11,88 +11,87 @@ import service3 from "../../assets/images/service 3.webp"
 // ── Floating UI widget components ──────────────────────────────────────────
 
 const SubjectProgressCard = () => (
-  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-3 sm:p-4 w-40 sm:w-44 md:w-48 select-none transform rotate-3 hover:rotate-1 transition-transform duration-300">
-    <p className="text-[10px] sm:text-[11px] font-bold text-gray-700 mb-2 sm:mb-3 uppercase tracking-wide">My Subjects</p>
+  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-3 sm:p-4 w-44 sm:w-48 md:w-52 select-none transform rotate-3 hover:rotate-1 transition-transform duration-300">
+    <div className="flex items-center justify-between mb-2 sm:mb-2.5">
+      <p className="text-[10px] sm:text-[11px] font-bold text-gray-700 uppercase tracking-wide">Enrolled Subjects</p>
+      <span className="text-[9px] sm:text-[10px] font-semibold text-violet-600 bg-violet-50 px-1.5 py-0.5 rounded-full">Grade 10</span>
+    </div>
     {[
-      { label: 'Subject Planned', count: 4, color: '#7C3AED' },
-      { label: 'On Progress', count: 3, color: '#F59E0B' },
-      { label: 'Finished', count: 1, color: '#10B981' },
+      { subject: 'Mathematics', sessions: '12 Sessions', color: '#7C3AED' },
+      { subject: 'Physics', sessions: '10 Sessions', color: '#F59E0B' },
+      { subject: 'Chemistry', sessions: '8 Sessions', color: '#10B981' },
     ].map((item) => (
-      <div key={item.label} className="flex items-center gap-1.5 sm:gap-2 py-1 sm:py-1.5 border-b border-gray-50 last:border-0">
+      <div key={item.subject} className="flex items-center gap-1.5 sm:gap-2 py-1 sm:py-1.5 border-b border-gray-50 last:border-0">
         <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-        <span className="text-[10px] sm:text-[11px] text-gray-500 flex-1">{item.label}</span>
-        <span className="text-[10px] sm:text-[11px] font-bold text-gray-800">{item.count}</span>
-        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 text-[9px] sm:text-[10px] font-bold">+</div>
+        <span className="text-[10px] sm:text-[11px] text-gray-700 font-medium flex-1">{item.subject}</span>
+        <span className="text-[9px] sm:text-[10px] text-gray-400 font-normal">{item.sessions}</span>
       </div>
     ))}
   </div>
 );
 
-const ChallengeCard = () => (
-  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-3 sm:p-4 w-44 sm:w-48 md:w-52 select-none transform -rotate-3 hover:-rotate-1 transition-transform duration-300">
+const HomeworkCard = () => (
+  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-3 sm:p-4 w-48 sm:w-52 md:w-56 select-none transform -rotate-3 hover:-rotate-1 transition-transform duration-300">
     <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-      <span className="text-[9px] sm:text-[10px] font-bold text-violet-600 bg-violet-50 px-1.5 sm:px-2 py-0.5 rounded-full">Science</span>
-      <span className="text-gray-300 text-xs sm:text-sm">···</span>
+      <span className="text-[9px] sm:text-[10px] font-bold text-violet-600 bg-violet-50 px-1.5 sm:px-2 py-0.5 rounded-full">Mathematics</span>
+      <span className="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded-full">Score: 98%</span>
     </div>
-    <p className="text-[10px] sm:text-xs font-bold text-gray-900 mb-1 leading-snug">Challenge 1: Anatomy Research</p>
-    <p className="text-[9px] sm:text-[10px] text-gray-400 mb-2 sm:mb-3 leading-relaxed">
-      Explore the human body like a superhero, uncovering how it all works together!
+    <p className="text-[10px] sm:text-xs font-bold text-gray-900 mb-1 leading-snug">Quadratic Equations & Roots</p>
+    <p className="text-[9px] sm:text-[10px] text-gray-500 mb-2 sm:mb-3 leading-relaxed">
+      &ldquo;Excellent problem solving steps in Section B!&rdquo; — Tutor Remark
     </p>
-    <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-gray-400">
-      <div className="flex -space-x-1">
-        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-amber-400 border-2 border-white" />
-        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-violet-400 border-2 border-white" />
-      </div>
-      <span>💬 10</span>
-      <span>📁 3 files</span>
+    <div className="flex items-center justify-between text-[9px] sm:text-[10px] text-gray-400 border-t border-gray-100 pt-2">
+      <span className="flex items-center gap-1">📄 assignment_04.pdf</span>
+      <span className="text-violet-600 font-semibold">Reviewed ✓</span>
     </div>
   </div>
 );
 
 const ScheduleCard = () => (
-  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-3 sm:p-4 w-52 sm:w-56 md:w-60 select-none transform rotate-2 hover:rotate-0 transition-transform duration-300">
-    <div className="flex items-center justify-between mb-1">
-      <p className="text-xs sm:text-sm font-bold text-gray-900">Schedule</p>
-      <span className="text-[9px] sm:text-[10px] text-violet-600 font-semibold bg-violet-50 px-1.5 sm:px-2 py-0.5 rounded-full">Today</span>
+  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-3 sm:p-4 w-52 sm:w-60 md:w-64 select-none transform rotate-2 hover:rotate-0 transition-transform duration-300">
+    <div className="flex items-center justify-between mb-1.5">
+      <p className="text-xs sm:text-sm font-bold text-gray-900">Upcoming Live Class</p>
+      <span className="text-[9px] sm:text-[10px] text-emerald-700 font-bold bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded-full flex items-center gap-1">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        Today · 5:00 PM
+      </span>
     </div>
-    <p className="text-[9px] sm:text-[10px] text-gray-400 mb-2 sm:mb-3">› June 20, 2025 ›</p>
-    {[
-      { subject: 'Biology', color: '#10B981', progress: 45 },
-      { subject: 'Mathematics', color: '#7C3AED', progress: 41 },
-    ].map((item) => (
-      <div key={item.subject} className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
-        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-sm shrink-0" style={{ backgroundColor: item.color }} />
-        <span className="text-[10px] sm:text-xs text-gray-700 w-16 sm:w-20 shrink-0">{item.subject}</span>
-        <div className="flex-1 bg-gray-100 rounded-full h-1.5 sm:h-2">
-          <div className="h-1.5 sm:h-2 rounded-full bg-violet-500" style={{ width: `${item.progress}%` }} />
-        </div>
-        <span className="text-[9px] sm:text-[10px] text-gray-400 shrink-0">{item.progress}%</span>
+    <p className="text-[10px] sm:text-xs font-semibold text-violet-700 mb-2.5">Physics · Laws of Motion</p>
+    <div className="bg-gray-50 rounded-lg p-2 mb-2.5 flex items-center justify-between">
+      <div>
+        <p className="text-[8px] sm:text-[9px] text-gray-400 uppercase font-semibold">Assigned Tutor</p>
+        <p className="text-[10px] sm:text-xs font-bold text-gray-800">Dr. Rajesh Kumar</p>
       </div>
-    ))}
+      <span className="text-[9px] sm:text-[10px] bg-[#4915b0] text-white font-medium px-2 py-1 rounded-md shadow-sm">Join Live</span>
+    </div>
+    <div className="flex items-center justify-between text-[9px] sm:text-[10px] text-gray-500 pt-1 border-t border-gray-100">
+      <span>Attendance Rate</span>
+      <span className="font-bold text-emerald-600">96% (24/25 Classes)</span>
+    </div>
   </div>
 );
 
-const QuizCards = () => (
-  <div className="flex flex-col gap-1.5 sm:gap-2 select-none transform -rotate-2 hover:rotate-0 transition-transform duration-300">
-    <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3 w-36 sm:w-40 md:w-44">
-      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-lg sm:text-xl shrink-0">🏀</div>
-      <div>
-        <p className="text-[10px] sm:text-xs font-bold text-gray-900">Sport Quiz</p>
-        <p className="text-[9px] sm:text-[10px] text-gray-400">20 Questions</p>
+const MaterialsCards = () => (
+  <div className="flex flex-col gap-2 select-none transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+    <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 w-48 sm:w-52 md:w-56">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 shrink-0 text-base sm:text-lg">
+        📚
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-[10px] sm:text-xs font-bold text-gray-900 truncate">Chapter Notes & PDFs</p>
+        <p className="text-[9px] sm:text-[10px] text-emerald-600 font-medium">Uploaded after each class</p>
       </div>
     </div>
-    <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-2.5 sm:p-3 flex items-center justify-between w-48 sm:w-52 md:w-56">
+    <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-2.5 sm:p-3 flex items-center justify-between w-52 sm:w-56 md:w-60">
       <div>
-        <p className="text-[10px] sm:text-xs font-bold text-gray-900">Statistics Math Quiz</p>
+        <p className="text-[10px] sm:text-xs font-bold text-gray-900">Periodic Test Assessment</p>
         <div className="flex items-center gap-1 sm:gap-1.5 mt-0.5">
-          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-sm bg-violet-400" />
-          <span className="text-[9px] sm:text-[10px] text-gray-400">Math · 12 Quizzes</span>
+          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-violet-500" />
+          <span className="text-[9px] sm:text-[10px] text-gray-500">CBSE & ICSE Board Pattern</span>
         </div>
       </div>
-      <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-200 flex items-center justify-center shrink-0">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-          <path d="M3.5 2l3 3-3 3" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+      <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 text-emerald-700 font-bold text-[10px]">
+        ✓
       </div>
     </div>
   </div>
@@ -143,15 +142,15 @@ const features: {
   {
     badge: 'ONE ON ONE TUTORING',
     badgeColor: '#EC4899',
-    title: 'Personalized Sessions\nfor Every Subject',
-    desc: "Get personalized sessions with experienced tutors for every subject, from math to language arts, tailored to meet your child's individual learning needs, all managed through an interactive dashboard for real-time tracking.",
-    bullets: ['Personalized Learning', 'Expert Tutors', 'Subject Variety', 'Interactive Dashboard'],
+    title: 'Personalized 1-on-1 Sessions\nfor Every Student',
+    desc: "Connect with verified, subject-specialist tutors for dedicated one-on-one learning tailored to your child's curriculum, syllabus, and learning pace with individual attention in every session.",
+    bullets: ['Dedicated 1-on-1 Mentorship', 'CBSE, ICSE & State Boards', 'Instant Doubt Resolution', 'Individual Learning Pace'],
     image: service2,
     frameColor: '#7C3AED',
     tiltClass: 'rotate-2',
     imageLeft: true,
     widget1: { el: <SubjectProgressCard />, pos: 'top-4 sm:top-6 left-2 sm:left-4' },
-    widget2: { el: <ChallengeCard />, pos: 'bottom-3 sm:bottom-4 right-2 sm:right-4' },
+    widget2: { el: <HomeworkCard />, pos: 'bottom-3 sm:bottom-4 right-2 sm:right-4' },
     decor: (
       <>
         <div className="absolute -top-4 sm:-top-5 right-12 sm:right-16 z-10"><Asterisk color="#F59E0B" size={28} /></div>
@@ -160,11 +159,11 @@ const features: {
     ),
   },
   {
-    badge: 'FLEXIBLE SCHEDULING',
+    badge: 'SMART SCHEDULING & TRACKING',
     badgeColor: '#EC4899',
-    title: 'Learn at a Pace That\nWorks for You',
-    desc: "There's no rush! You can take breaks, go back to things you enjoy, and spend as much time as you need on each lesson.",
-    bullets: ['Flexible Learning Flow', 'Relaxed Learning Mode', 'Personalized Learning Journey', 'Pace Perfect'],
+    title: 'Real-Time Progress &\nSchedule Management',
+    desc: "Manage class schedules around your family's routine. Monitor live attendance, class timetables, and academic milestones in real time through the dedicated student and parent portal.",
+    bullets: ['Flexible Class Timetable', 'Live Attendance Tracking', 'Automated Session Reminders', 'Parent Visibility & Reports'],
     image: service3,
     frameColor: '#F59E0B',
     tiltClass: '-rotate-2',
@@ -179,17 +178,17 @@ const features: {
     ),
   },
   {
-    badge: 'INTERACTIVE LESSONS',
+    badge: 'NOTES & ASSESSMENTS',
     badgeColor: '#22C55E',
-    title: 'Fun and Engaging\nLearning Tools',
-    desc: 'Our platform uses interactive lessons and cool resources like games and quizzes to keep your child engaged and excited while learning new things.',
-    bullets: ['Interactive Learning', 'Quizzes and Assessments', 'Gamified Resources'],
+    title: 'Curated Chapter Notes,\nHomework & Assessments',
+    desc: 'Strengthen conceptual clarity with chapter-wise study notes uploaded after every session, structured homework assignments with tutor remarks, and periodic syllabus-aligned test assessments.',
+    bullets: ['Chapter-wise Study Notes (PDF)', 'Regular Homework & Grading', 'Tutor Feedback & Remarks', 'Exam-Oriented Practice Tests'],
     image: service1,
     frameColor: '#7C3AED',
     tiltClass: 'rotate-1',
     imageLeft: true,
     widget1: null,
-    widget2: { el: <QuizCards />, pos: 'bottom-3 sm:bottom-4 right-2 sm:right-4' },
+    widget2: { el: <MaterialsCards />, pos: 'bottom-3 sm:bottom-4 right-2 sm:right-4' },
     decor: (
       <>
         <div className="absolute -top-3 sm:-top-4 right-10 sm:right-14 z-10 rotate-12"><Asterisk color="#F59E0B" size={26} /></div>

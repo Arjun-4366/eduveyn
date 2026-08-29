@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const EMPTY_RESULT: ITutorListResponse = {
   success: true,
-  data: { tutors: [], pagination: { limit: 9, page: 1, total: 0, total_pages: 1 } },
+  data: { tutors: [], pagination: { limit: 10, page: 1, total: 0, total_pages: 1 } },
 };
 
 export default async function TeachersPage({
