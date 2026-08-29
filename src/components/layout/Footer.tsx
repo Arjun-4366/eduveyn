@@ -218,8 +218,8 @@ export default function Footer({ contact }: { contact: ISiteContentContact }) {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6">
           <p className="text-gray-800 text-xs">© 2026 Eduveyn. All rights reserved.</p>
           <div className="flex items-center gap-4 text-xs text-gray-400">
-            <Link href="/privacy" className="hover:text-gray-600 transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-gray-600 transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-gray-600 transition-colors">Terms & Conditions</Link>
           </div>
         </div>
 
