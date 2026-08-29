@@ -134,7 +134,7 @@ export default function StudyOptions({ pricing }: { pricing: ISiteContentPricing
                         </span>
                       )}
                     </div>
-                    <p className="text-white/80 text-[10px] sm:text-xs font-semibold">{option.price}</p>
+                    {/* <p className="text-white/80 text-[10px] sm:text-xs font-semibold">{option.price}</p> */}
                   </div>
 
                   <div className="bg-white mx-2 sm:mx-3 mb-2 sm:mb-3 rounded-[18px] sm:rounded-[20px] md:rounded-[24px] px-4 sm:px-5 py-4 sm:py-5">
