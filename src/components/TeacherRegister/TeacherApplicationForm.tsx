@@ -356,7 +356,7 @@ export default function TeacherApplicationForm({
                         </div>
 
                         <div>
-                          <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Short Bio</label>
+                          <label className="block text-[10px] sm:text-xs font-semibold text-gray-600 mb-1 sm:mb-1.5 uppercase tracking-wide">Short Bio*</label>
                           <textarea
                             placeholder="Tell parents about your teaching style and experience..."
                             rows={3}
