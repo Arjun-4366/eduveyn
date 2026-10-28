@@ -94,6 +94,7 @@ export default function TeacherApplicationForm({
     if (form.class_ids.length === 0) missing.push('at least one Class');
     if (form.syllabus_ids.length === 0) missing.push('at least one Syllabus');
     if (form.experience.trim() === '') missing.push('Teaching Experience');
+    if(form.bio.trim() === '') missing.push('Bio');
     if (!form.resume) missing.push('Resume');
 
     if (missing.length > 0) {
