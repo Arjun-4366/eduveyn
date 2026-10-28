@@ -24,6 +24,7 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
   const title = header.title || DEFAULT_HERO_TITLE;
   const subtitle = header.subtitle || "Expert tutors. Flexible schedules. Real results. Helping every child unlock their full potential — one lesson at a time.";
   const { lead, emphasis } = splitHeadlineEmphasis(title);
+  const portalUrl: string = process.env.NEXT_PUBLIC_PORTAL_URL ?? '#';
 
   return (
     <section className="relative overflow-hidden  bg-[#F5F5F7] hero-grid-bg">
@@ -119,7 +120,8 @@ export default function HomeHero({ header }: { header: ISiteContentHeader }) {
             </Link>
 
             <Link
-              href="/login"
+              href={portalUrl}
+              target="_blank"
               className="flex items-center gap-2 bg-[#F59E0B] text-gray-900 font-semibold px-5 sm:px-7 h-12 sm:h-14 rounded-full hover:bg-amber-400 transition-colors text-xs sm:text-sm w-full sm:w-auto justify-center"
             >
               Join Now

@@ -49,6 +49,7 @@ export default function TeacherApplicationForm({
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [step1Error, setStep1Error] = useState<string | null>(null);
+  const [step2Error, setStep2Error] = useState<string | null>(null);
   const [resumeError, setResumeError] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
 
@@ -85,6 +86,23 @@ export default function TeacherApplicationForm({
     }
     setStep1Error(null);
     setStep(2);
+  };
+
+  const goToStep3 = () => {
+    const missing: string[] = [];
+    if (form.subject_ids.length === 0) missing.push('at least one Subject');
+    if (form.class_ids.length === 0) missing.push('at least one Class');
+    if (form.syllabus_ids.length === 0) missing.push('at least one Syllabus');
+    if (form.experience.trim() === '') missing.push('Teaching Experience');
+    if (!form.resume) missing.push('Resume');
+
+    if (missing.length > 0) {
+      setStep2Error(`Please provide: ${missing.join(', ')}.`);
+      return;
+    }
+    setStep2Error(null);
+    setResumeError(null);
+    setStep(3);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -364,12 +382,16 @@ export default function TeacherApplicationForm({
                           )}
                         </div>
 
+                        {step2Error && (
+                          <p className="text-red-500 text-xs sm:text-sm bg-red-50 border border-red-100 rounded-xl px-3 py-2">{step2Error}</p>
+                        )}
+
                         <div className="flex gap-2 sm:gap-3">
                           <button type="button" onClick={() => setStep(1)}
                             className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3 sm:py-3.5 rounded-xl hover:bg-gray-50 transition-colors text-xs sm:text-sm">
                             ← Back
                           </button>
-                          <button type="button" onClick={() => setStep(3)}
+                          <button type="button" onClick={goToStep3}
                             className="flex-1 bg-[#D97706] text-white font-bold py-3 sm:py-3.5 rounded-xl hover:bg-amber-600 transition-colors text-xs sm:text-sm shadow-lg shadow-amber-200">
                             Review →
                           </button>
